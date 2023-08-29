@@ -37,12 +37,6 @@ const Page = () => (
             sm={6}
             lg={3}
           >
-            <OverviewBudget
-              difference={12}
-              positive
-              sx={{ height: '100%' }}
-              value="$24k"
-            />
           </Grid>
           <Grid
             xs={12}

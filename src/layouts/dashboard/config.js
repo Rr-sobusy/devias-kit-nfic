@@ -46,6 +46,15 @@ export const items = [
     )
   },
   {
+    title: 'Settingsrex',
+    path: '/settings',
+    icon: (
+      <SvgIcon fontSize="small">
+        <CogIcon />
+      </SvgIcon>
+    )
+  },
+  {
     title: 'Settings',
     path: '/settings',
     icon: (
