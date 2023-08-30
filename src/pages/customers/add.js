@@ -11,6 +11,7 @@ import {
   CardActions,
   TextField,
   Button,
+  Divider,
 } from "@mui/material";
 import Head from "next/head";
 import { useForm } from "react-hook-form";
@@ -39,7 +40,8 @@ const Page = () => {
             <Typography variant="h4">Add Customer</Typography>
           </Stack>
           <Card sx={{ marginTop: 5 }}>
-            <CardHeader title="Enter Customer details" />
+            <CardHeader subheader="Input the customer name details" title="Customer details" />
+            <Divider />
             <form onSubmit={handleSubmit((data) => console.log(data))}>
               <CardContent>
                 <Stack direction="row" gap={3}>
@@ -47,7 +49,7 @@ const Page = () => {
                     className=""
                     {...register("firstName", { required: true })}
                     sx={{ flexGrow: 1 }}
-                    label="First Name"
+                    label={`${errors.firstName ? 'First Name required *' : 'First Name'}`}
                   />
                   <TextField {...register("lastName")} sx={{ flexGrow: 1 }} label="Last Name" />
                 </Stack>
@@ -55,7 +57,6 @@ const Page = () => {
                   <Link href={`/customers`}>
                     <Button>Cancel</Button>
                   </Link>
-
                   <Button type="submit" variant="contained">
                     Create
                   </Button>
