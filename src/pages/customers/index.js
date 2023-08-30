@@ -200,7 +200,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Customers | NFIC TEST SYSTEM
+          Customers
         </title>
       </Head>
       <Box
