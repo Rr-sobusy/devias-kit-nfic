@@ -41,9 +41,34 @@ const Page = () => {
           <Grid mt={3} spacing={3} container>
             <Grid xs={12} md={6} lg={3}>
               <TotalSold
+               bgColor="#6366F1"
                 title="Products Sold today"
                 iconElement={<CurrencyDollarIcon />}
                 value="100"
+              />
+            </Grid>
+            <Grid xs={12} md={6} lg={3}>
+              <TotalSold
+               bgColor="#6366F1"
+                title="Best moving stock"
+                iconElement={<CurrencyDollarIcon />}
+                value="DWA"
+              />
+            </Grid>
+            <Grid xs={12} md={6} lg={3}>
+              <TotalSold
+               bgColor="#6366F1"
+                title="Best moving stock"
+                iconElement={<CurrencyDollarIcon />}
+                value="DWA"
+              />
+            </Grid>
+            <Grid xs={12} md={6} lg={3}>
+              <TotalSold
+               bgColor="#6366F1"
+                title="Best moving stock"
+                iconElement={<CurrencyDollarIcon />}
+                value="DWA"
               />
             </Grid>
           </Grid>

@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Avatar, Card, CardContent, Stack, SvgIcon, Typography } from "@mui/material";
+import { Avatar, Card, CardContent, Divider, Stack, SvgIcon, Typography } from "@mui/material";
 
 const TotalSold = (props) => {
-  const { value, sx , title , iconElement} = props;
+  const { value, sx , title , iconElement, bgColor} = props;
   return (
     <Card sx={sx}>
       <CardContent>
@@ -12,11 +12,11 @@ const TotalSold = (props) => {
             <Typography color="text.secondary" variant="overline">
              {title}
             </Typography>
-            <Typography variant="h4">{`${value} T`}</Typography>
+            <Typography variant="h4">{`${value}`}</Typography>
           </Stack>
           <Avatar
             sx={{
-              backgroundColor: "primary.main",
+              backgroundColor: bgColor,
               height: 56,
               width: 56,
             }}
@@ -26,7 +26,11 @@ const TotalSold = (props) => {
             </SvgIcon>
           </Avatar>
         </Stack>
+        <Stack marginTop={1} direction="row">
+          <Typography>rex</Typography>
+        </Stack>
       </CardContent>
+      <Divider/>
     </Card>
   );
 };
@@ -34,7 +38,8 @@ const TotalSold = (props) => {
 TotalSold.propTypes = {
   value: PropTypes.string,
   title : PropTypes.string,
-  iconElement: PropTypes.node
+  iconElement: PropTypes.node,
+  bgColor: PropTypes.string
 };
 
 export default TotalSold;

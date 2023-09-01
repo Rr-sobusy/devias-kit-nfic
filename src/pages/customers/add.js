@@ -9,15 +9,10 @@ import {
   CardHeader,
   CardContent,
   CardActions,
-  TextField,
-  Button,
   Divider,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel
 } from "@mui/material";
-import Head from "next/head";
+import Head from "next/head"
+import { Input } from "src/ui-components/ui/input";
 import { Button as Button2 } from "src/ui-components/ui/button";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
@@ -48,24 +43,32 @@ const Page = () => {
           <Card sx={{ marginTop: 5 }}>
             <CardHeader subheader="Input the customer name details" title="Customer details" />
             <Divider />
-            <form onSubmit={handleSubmit((data) => console.log(data))}>
+            <form onSubmit={handleSubmit(() => console.log(errors))}>
               <CardContent>
                 <Stack direction="row" gap={3}>
-                  <TextField
-                    className=""
-                    {...register("firstName", { required: true })}
-                    sx={{ flexGrow: 1 }}
-                    label={`${errors.firstName ? "First Name required *" : "First Name"}`}
-                  />
-                  <TextField {...register("lastName")} sx={{ flexGrow: 1 }} label="Last Name" />
+                  <Stack flexGrow={1}>
+                    <Input
+                      {...register("firstName",{required: true})}
+                      type="text"
+                      placeholder="First Name"
+                      className={`h-[3.5rem]`}
+                    />
+                    {errors.firstName && <p className="mx-1 mt-2 text-red-400">First Name required !</p>}
+                  </Stack>
+                  <Stack flexGrow={1}>
+                  <Input
+                      {...register("lastName",{required: false})}
+                      type="text"
+                      placeholder="First Name"
+                      className={`h-[3.5rem]`}
+                    />
+                  </Stack>
                 </Stack>
-                <CardActions sx={{ justifyContent: "flex-end", marginTop: 2, gap: 2 }}>
+                <CardActions sx={{ justifyContent: "flex-end", marginTop: 6, gap: 2 }}>
                   <Link href={`/customers`}>
-                    <Button>Cancel</Button>
+                    <Button2 variant="outline">Cancel</Button2>
                   </Link>
-                  <Button type="submit" variant="contained">
-                    Create
-                  </Button>
+                  <Button2 type="submit">Create</Button2>
                 </CardActions>
               </CardContent>
             </form>

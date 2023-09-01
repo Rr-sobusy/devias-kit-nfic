@@ -9,7 +9,7 @@ export const OverviewTotalProfit = (props) => {
     <Card sx={sx}>
       <CardContent>
         <Stack
-          alignItems="flex-start"
+          alignItems="end"
           direction="row"
           justifyContent="space-between"
           spacing={3}
