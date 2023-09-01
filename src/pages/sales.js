@@ -28,11 +28,11 @@ const Page = () => {
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="h4">Sales Stats</Typography>
             <Button
-              startIcon={
+              startIcon={ (
                 <SvgIcon>
                   <PlusIcon />
                 </SvgIcon>
-              }
+              )}
               variant="contained"
             >
               Add Sales
