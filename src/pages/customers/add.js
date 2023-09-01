@@ -12,8 +12,13 @@ import {
   TextField,
   Button,
   Divider,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel
 } from "@mui/material";
 import Head from "next/head";
+import { Button as Button2 } from "src/ui-components/ui/button";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 
@@ -23,6 +28,7 @@ const Page = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+ 
   return (
     <>
       <Head>
@@ -49,7 +55,7 @@ const Page = () => {
                     className=""
                     {...register("firstName", { required: true })}
                     sx={{ flexGrow: 1 }}
-                    label={`${errors.firstName ? 'First Name required *' : 'First Name'}`}
+                    label={`${errors.firstName ? "First Name required *" : "First Name"}`}
                   />
                   <TextField {...register("lastName")} sx={{ flexGrow: 1 }} label="Last Name" />
                 </Stack>
