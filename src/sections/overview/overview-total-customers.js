@@ -8,7 +8,7 @@ export const OverviewTotalCustomers = (props) => {
   const { difference, positive = false, sx, value } = props;
 
   return (
-    <Card sx={sx}>
+    <Card sx={{height: '100%'}} >
       <CardContent>
         <Stack
           alignItems="flex-start"

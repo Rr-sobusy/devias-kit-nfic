@@ -26,7 +26,9 @@ const Page = () => {
       <Box sx={{ py: 8, flexGrow: 1 }}>
         <Container maxWidth="xl" component="main">
           <Stack direction="row" justifyContent="space-between">
-            <Typography variant="h4">Sales Stats</Typography>
+           <Stack>
+           <Typography variant="h4">Sales Stats</Typography>
+           </Stack>
             <Button
               startIcon={ (
                 <SvgIcon>
