@@ -16,7 +16,7 @@ const TotalProduced = ({beginningDate, value}) => {
             </Typography>
             <Typography variant='caption' color="text.secondary">Since {beginningDate}</Typography>
         </Stack>
-        <Avatar sx={{ bgcolor: "#F0DE36", height: 56, width: 56 }}>
+        <Avatar sx={{ bgcolor: "#FFBB5C", height: 56, width: 56 }}>
           <SvgIcon>
             <Produced />
           </SvgIcon>

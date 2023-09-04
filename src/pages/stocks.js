@@ -25,17 +25,23 @@ import { useProduced } from "src/hooks/use-total-produced";
 import { useOutbounded } from "src/hooks/use-total-outbounded";
 
 const Page = (props) => {
-const [filterWithStocks,setFilterWithStocks] = React.useState(false)
+  const [filterWithStocks, setFilterWithStocks] = React.useState(false);
+  const [searchString, setSearchString] = React.useState("");
 
   // Custom hook
-  const totalStocks = useTotalStocks(props.productDatas)
-  const withStocks = useWithStocks(props.productDatas)
-  const totalProduced = useProduced(props.productionDatas)
-  const totalOutbounded = useOutbounded(props.salesDatas)
+  const totalStocks = useTotalStocks(props.productDatas);
+  const withStocks = useWithStocks(props.productDatas);
+  const totalProduced = useProduced(props.productionDatas);
+  const totalOutbounded = useOutbounded(props.salesDatas);
 
-  // 
-  const currentDate = new Date().toLocaleDateString()
-
+  //
+  const currentDate = new Date().toLocaleDateString();
+  const filteredProductByStocks = props.productDatas?.filter(
+    ({ current_stocks }) => current_stocks !== "0"
+  );
+  const filteredProductByName = props.productDatas?.filter(
+    ({ product_name }) => product_name === searchString
+  );
   return (
     <>
       <Head>
@@ -65,15 +71,30 @@ const [filterWithStocks,setFilterWithStocks] = React.useState(false)
               <WithStocks currentDate={currentDate} value={withStocks.length} />
             </Grid>
             <Grid xs={12} md={6} lg={3}>
-              <TotalProduced value={totalProduced} beginningDate={props.productionDatas[0].production_date} />
+              <TotalProduced
+                value={totalProduced}
+                beginningDate={props.productionDatas[0].production_date}
+              />
             </Grid>
             <Grid xs={12} md={6} lg={3}>
-              <TotalOutbounded value={totalOutbounded} beginningDate={props.salesDatas[props.salesDatas.length - 1].createdAt} />
+              <TotalOutbounded
+                value={totalOutbounded}
+                beginningDate={props.salesDatas[props.salesDatas.length - 1].createdAt}
+              />
             </Grid>
           </Grid>
           <Stack spacing={3} marginTop={2}>
-            <ProductSearch />
-            <ProductTable productDatas={props.productDatas} />
+            <ProductSearch
+              searchHandler={(params) => setSearchString(params)}
+              toggleHandler={() => setFilterWithStocks((prev) => !prev)}
+            />
+            <ProductTable
+              productDatas={
+                filterWithStocks
+                  ? filteredProductByStocks
+                  : props.productDatas || searchString ? [] : null
+              }
+            />
           </Stack>
         </Container>
       </Box>
@@ -87,12 +108,12 @@ export async function getServerSideProps() {
   const datas = await fetch("http://192.168.1.100:3003/api/getproducts");
   const productDatas = await datas.json();
 
-  const productionData = await fetch('http://192.168.1.100:3003/api/getproductiondatas')
-  const productionDatas  = await productionData.json()
+  const productionData = await fetch("http://192.168.1.100:3003/api/getproductiondatas");
+  const productionDatas = await productionData.json();
 
-  const salesData = await fetch('http://192.168.1.100:3003/api/getsales')
-  const salesDatas = await salesData.json()
+  const salesData = await fetch("http://192.168.1.100:3003/api/getsales");
+  const salesDatas = await salesData.json();
   return {
-    props: { productDatas, productionDatas , salesDatas},
+    props: { productDatas, productionDatas, salesDatas },
   };
 }
