@@ -15,10 +15,27 @@ import ProductSearch from "src/sections/stocks/product-search";
 import ProductTable from "src/sections/stocks/product-table";
 import WithStocks from "src/sections/stocks/product-with-stocks";
 import TotalProduced from "src/sections/stocks/total-products-produce";
+import TotalOutbounded from "src/sections/stocks/total-products-outbounded";
 
 import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
 
-const Page = () => {
+import { useTotalStocks } from "src/hooks/use-total-stocks";
+import { useWithStocks } from "src/hooks/use-with-stocks";
+import { useProduced } from "src/hooks/use-total-produced";
+import { useOutbounded } from "src/hooks/use-total-outbounded";
+
+const Page = (props) => {
+const [filterWithStocks,setFilterWithStocks] = React.useState(false)
+
+  // Custom hook
+  const totalStocks = useTotalStocks(props.productDatas)
+  const withStocks = useWithStocks(props.productDatas)
+  const totalProduced = useProduced(props.productionDatas)
+  const totalOutbounded = useOutbounded(props.salesDatas)
+
+  // 
+  const currentDate = new Date().toLocaleDateString()
+
   return (
     <>
       <Head>
@@ -27,8 +44,9 @@ const Page = () => {
       <Box sx={{ py: 8, flexGrow: 1 }}>
         <Container component="main" maxWidth="xl">
           <Stack direction="row" justifyContent="space-between">
-            <Typography variant="h4">Warehouse Stats</Typography>
+            <Typography variant="h4">Warehouse Statistics</Typography>
             <Button
+              onClick={() => alert("ok")}
               startIcon={
                 <SvgIcon>
                   <PlusIcon />
@@ -39,23 +57,23 @@ const Page = () => {
               Add Product
             </Button>
           </Stack>
-          <Grid spacing={5} sx={{ flexGrow: 1, marginTop: 3 }} container>
+          <Grid spacing={3} sx={{ flexGrow: 1, marginTop: 3 }} container>
             <Grid xs={12} md={6} lg={3}>
-              <WarehouseStocks />
+              <WarehouseStocks currentDate={currentDate} value={totalStocks} />
             </Grid>
             <Grid xs={12} md={6} lg={3}>
-              <WithStocks />
+              <WithStocks currentDate={currentDate} value={withStocks.length} />
             </Grid>
             <Grid xs={12} md={6} lg={3}>
-              <TotalProduced/>
+              <TotalProduced value={totalProduced} beginningDate={props.productionDatas[0].production_date} />
             </Grid>
             <Grid xs={12} md={6} lg={3}>
-              <WarehouseStocks />
+              <TotalOutbounded value={totalOutbounded} beginningDate={props.salesDatas[props.salesDatas.length - 1].createdAt} />
             </Grid>
           </Grid>
           <Stack spacing={3} marginTop={2}>
             <ProductSearch />
-            <ProductTable productDatas={[{productId:1,productName:'Doggy Woggy Adult'}]} />
+            <ProductTable productDatas={props.productDatas} />
           </Stack>
         </Container>
       </Box>
@@ -64,3 +82,17 @@ const Page = () => {
 };
 Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 export default Page;
+
+export async function getServerSideProps() {
+  const datas = await fetch("http://192.168.1.100:3003/api/getproducts");
+  const productDatas = await datas.json();
+
+  const productionData = await fetch('http://192.168.1.100:3003/api/getproductiondatas')
+  const productionDatas  = await productionData.json()
+
+  const salesData = await fetch('http://192.168.1.100:3003/api/getsales')
+  const salesDatas = await salesData.json()
+  return {
+    props: { productDatas, productionDatas , salesDatas},
+  };
+}

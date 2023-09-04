@@ -1,24 +1,25 @@
-import { Avatar, Card, CardContent, Stack, SvgIcon, Typography } from "@mui/material";
 import React from "react";
-import Bag from "@heroicons/react/24/solid/ShoppingBagIcon";
+import { Avatar, Card, CardContent, Stack, SvgIcon, Typography } from "@mui/material";
+import Truck from "@heroicons/react/24/solid/TruckIcon";
 import Proptypes from "prop-types";
-const WithStocks = ({ value, currentDate }) => {
+
+const TotalOutbounded = ({ value, beginningDate }) => {
   return (
     <Card sx={{ height: "100%" }}>
       <CardContent>
         <Stack spacing={3} direction="row" justifyContent="space-between">
           <Stack spacing={2}>
             <Typography color="text.secondary" variant="overline">
-              Products with stocks
+              Products Outbounded
             </Typography>
-            <Typography variant="h4">{value}</Typography>
+            <Typography variant="h4">{value} KT</Typography>
             <Typography variant="caption" color="text.secondary">
-              As of {currentDate}
+              Since {beginningDate}
             </Typography>
           </Stack>
-          <Avatar sx={{ bgcolor: "#EF9595", height: 56, width: 56 }}>
+          <Avatar sx={{ bgcolor: "#FFA1F5", height: 56, width: 56 }}>
             <SvgIcon>
-              <Bag />
+              <Truck />
             </SvgIcon>
           </Avatar>
         </Stack>
@@ -27,9 +28,8 @@ const WithStocks = ({ value, currentDate }) => {
   );
 };
 
-export default WithStocks;
-
-WithStocks.propTypes = {
+export default TotalOutbounded;
+TotalOutbounded.propTypes = {
+  beginningDate: Proptypes.string,
   value: Proptypes.number,
-  currentDate: Proptypes.string,
 };
