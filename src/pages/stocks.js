@@ -89,11 +89,7 @@ const Page = (props) => {
               toggleHandler={() => setFilterWithStocks((prev) => !prev)}
             />
             <ProductTable
-              productDatas={
-                filterWithStocks
-                  ? filteredProductByStocks
-                  : props.productDatas || searchString ? [] : null
-              }
+              productDatas={filterWithStocks ? filteredProductByStocks : props.productDatas}
             />
           </Stack>
         </Container>
@@ -105,15 +101,23 @@ Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 export default Page;
 
 export async function getServerSideProps() {
-  const datas = await fetch("http://192.168.1.100:3003/api/getproducts");
-  const productDatas = await datas.json();
-
-  const productionData = await fetch("http://192.168.1.100:3003/api/getproductiondatas");
-  const productionDatas = await productionData.json();
-
-  const salesData = await fetch("http://192.168.1.100:3003/api/getsales");
-  const salesDatas = await salesData.json();
-  return {
-    props: { productDatas, productionDatas, salesDatas },
-  };
+  try {
+    // Fetch product datas coming from API
+    const productDatas = await fetch("http://192.168.1.100:3003/api/getproducts").then((res) =>
+      res.json()
+    );
+    // Fetch production datas coming from API
+    const productionDatas = await fetch("http://192.168.1.100:3003/api/getproductiondatas").then(
+      (res) => res.json()
+    );
+    // Fetch sales datas coming from API
+    const salesDatas = await fetch("http://192.168.1.100:3003/api/getsales").then((res) =>
+      res.json()
+    );
+    return {
+      props: { productDatas, productionDatas, salesDatas },
+    };
+  } catch (err) {
+    console.error(err);
+  }
 }
