@@ -13,6 +13,13 @@ const SalesThisWeek = (props) => {
     xaxis: {
       categories: categories,
     },
+    yaxis:{
+        labels: {
+            formatter: (value) => (value > 0 ? `${(value / 1000).toFixed(2)} Tons` : `${value}`),
+            offsetX: -10,
+          },
+    }
+    ,
     labels: {
       style: {
         colors: "#247BA0",

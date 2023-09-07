@@ -96,7 +96,7 @@ const Page = (props) => {
               />
             </Grid>
             <Grid xs={12} md={6} lg={4}>
-             <SalesThisWeek categories={props.salesThisWeek?.map(({sales_date})=>sales_date).sort((a,b)=>b.sales_date - a.sales_date)} chartSeries={[
+             <SalesThisWeek categories={props.salesThisWeek?.map(({sales_date})=>sales_date).sort((a,b)=>a.sales_date - b.sales_date)} chartSeries={[
                   {
                     name : 'Sales this day',
                     data: props.salesThisWeek.map(({sales_this_day})=>sales_this_day)
