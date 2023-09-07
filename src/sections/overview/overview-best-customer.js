@@ -1,14 +1,9 @@
 import PropTypes from "prop-types";
-import ArrowPathIcon from "@heroicons/react/24/solid/ArrowPathIcon";
-import ArrowRightIcon from "@heroicons/react/24/solid/ArrowRightIcon";
 import {
-  Button,
   Card,
-  CardActions,
   CardContent,
   CardHeader,
   Divider,
-  SvgIcon,
 } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
 import { Chart } from "src/components/chart";
@@ -24,7 +19,7 @@ const useChartOptions = (categories) => {
         show: false,
       },
     },
-    colors: [theme.palette.primary.main, alpha(theme.palette.primary.main, 0.25)],
+    colors: [theme.palette.success.main, alpha(theme.palette.primary.main, 0.25)],
     dataLabels: {
       enabled: false,
     },
@@ -81,7 +76,7 @@ const useChartOptions = (categories) => {
     },
     yaxis: {
       labels: {
-        formatter: (value) => (value > 0 ? `${(value).toFixed(2)} Tons` : `${value}`),
+        formatter: (value) => (value > 0 ? `${(value).toFixed(2)} Tons bought` : `${value}`),
         offsetX: -10,
         style: {
           colors: theme.palette.text.secondary,
@@ -91,14 +86,14 @@ const useChartOptions = (categories) => {
   };
 };
 
-export const OverviewSales = (props) => {
+export const TopCustomers = (props) => {
   const { chartSeries, sx, categories = [] } = props;
   const chartOptions = useChartOptions(categories);
 
   return (
     <Card sx={sx}>
       <CardHeader
-        title="Outbounded this year"
+        title="Customer Performance"
       />
       <CardContent>
         <Chart
@@ -114,7 +109,7 @@ export const OverviewSales = (props) => {
   );
 };
 
-OverviewSales.protoTypes = {
+TopCustomers.protoTypes = {
   chartSeries: PropTypes.array.isRequired,
   sx: PropTypes.object,
 };

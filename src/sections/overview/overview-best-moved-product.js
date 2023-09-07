@@ -17,6 +17,7 @@ const useChartOptions = (labels) => {
       theme.palette.success.main,
       theme.palette.warning.main,
       theme.palette.error.main,
+      theme.palette.secondary.main
     ],
     dataLabels: {
       enabled: false,
@@ -60,7 +61,7 @@ export const BestMovedProduct = (props) => {
 
   return (
     <Card sx={sx}>
-      <CardHeader title="Top 4 moving products" />
+      <CardHeader title="Top 5 moving products" />
       <CardContent>
         <Chart height={300} options={chartOptions} series={chartSeries} type="donut" width="100%" />
         <Stack
