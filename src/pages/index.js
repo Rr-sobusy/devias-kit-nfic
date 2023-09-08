@@ -1,11 +1,8 @@
 import Head from "next/head";
-import { subDays, subHours } from "date-fns";
 import { Box, Container, Unstable_Grid2 as Grid } from "@mui/material";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { TopCustomers } from "src/sections/overview/overview-best-customer";
 import SalesThisWeek from "src/sections/overview/overview-sales-last7days";
-import { OverviewLatestOrders } from "src/sections/overview/overview-latest-orders";
-import { OverviewLatestProducts } from "src/sections/overview/overview-latest-products";
 import { OverviewSales } from "src/sections/overview/overview-sales";
 import { OverviewTasksProgress } from "src/sections/overview/overview-tasks-progress";
 import { OverviewTotalCustomers } from "src/sections/overview/overview-total-customers";
@@ -15,10 +12,21 @@ import { BestMovedProduct } from "src/sections/overview/overview-best-moved-prod
 const now = new Date();
 
 const Page = (props) => {
+  const sortedSalesThisWeek = props.salesThisWeek
+    .map((values, index) => ({ ...values, index }))
+    .sort((a, b) => b.index - a.index);
   const salesPerMonth = props.salesPerMonth?.map(({ month, total_sales }) => {
     return {
       month:
-        month === "5"
+        month === "1"
+          ? "January"
+          : month === "2"
+          ? "February"
+          : month === "3"
+          ? "March"
+          : month === "4"
+          ? "April"
+          : month === "5"
           ? "May"
           : month === "6"
           ? "June"
@@ -61,12 +69,7 @@ const Page = (props) => {
               />
             </Grid>
             <Grid xs={12} sm={6} lg={3}>
-              <OverviewTotalCustomers
-                difference={16}
-                positive={false}
-                sx={{ height: "100%" }}
-                
-              />
+              <OverviewTotalCustomers difference={16} positive={false} sx={{ height: "100%" }} />
             </Grid>
             <Grid xs={12} sm={6} lg={3}>
               <OverviewTasksProgress sx={{ height: "100%" }} value={75.5} />
@@ -76,11 +79,11 @@ const Page = (props) => {
             </Grid>
             <Grid xs={12} lg={8}>
               <OverviewSales
-                categories={salesPerMonth.map(({month})=>month)}
+                categories={salesPerMonth.map(({ month }) => month)}
                 chartSeries={[
                   {
                     name: "Sales this month",
-                    data: salesPerMonth.map(({value})=>value),
+                    data: salesPerMonth.map(({ value }) => value),
                   },
                 ]}
                 sx={{ height: "100%" }}
@@ -96,22 +99,29 @@ const Page = (props) => {
               />
             </Grid>
             <Grid xs={12} md={6} lg={4}>
-             <SalesThisWeek categories={props.salesThisWeek?.map(({sales_date})=>sales_date).sort((a,b)=>a.sales_date - b.sales_date)} chartSeries={[
+              <SalesThisWeek
+                categories={sortedSalesThisWeek.map(({ sales_date }) => sales_date)}
+                chartSeries={[
                   {
-                    name : 'Sales this day',
-                    data: props.salesThisWeek.map(({sales_this_day})=>sales_this_day)
-                  }
-             ]}/>
+                    name: "Sales this day",
+                    data: sortedSalesThisWeek.map(({ sales_this_day }) => sales_this_day),
+                  },
+                ]}
+              />
             </Grid>
             <Grid xs={12} md={12} lg={8}>
-              <TopCustomers  categories={props.customerStats?.map(({customer_name})=>customer_name)}
+              <TopCustomers
+                categories={props.customerStats?.map(({ customer_name }) => customer_name)}
                 chartSeries={[
                   {
                     name: "Volume purchased",
-                    data: props.customerStats.map(({total_bought})=>Number(total_bought) / 1000),
+                    data: props.customerStats.map(
+                      ({ total_bought }) => Number(total_bought) / 1000
+                    ),
                   },
                 ]}
-                sx={{ height: "100%" }} />
+                sx={{ height: "100%" }}
+              />
             </Grid>
           </Grid>
         </Container>
@@ -141,13 +151,15 @@ export async function getServerSideProps() {
       (res) => res.json()
     );
 
-    const salesThisWeek = await fetch('http://192.168.1.100:3003/api/getsalesthisweek').then(res=>res.json())
+    const salesThisWeek = await fetch("http://192.168.1.100:3003/api/getsalesthisweek").then(
+      (res) => res.json()
+    );
     return {
       props: {
         salesData,
         salesPerMonth,
         customerStats,
-        salesThisWeek
+        salesThisWeek,
       },
     };
   } catch (err) {

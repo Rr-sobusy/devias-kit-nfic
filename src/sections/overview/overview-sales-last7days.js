@@ -10,16 +10,19 @@ const SalesThisWeek = (props) => {
       id: "basic-line",
       toolbar: false,
     },
+    markers: {
+      size: 5,
+      color: "black",
+    },
     xaxis: {
       categories: categories,
     },
-    yaxis:{
-        labels: {
-            formatter: (value) => (value > 0 ? `${(value / 1000).toFixed(2)} Tons` : `${value}`),
-            offsetX: -10,
-          },
-    }
-    ,
+    yaxis: {
+      labels: {
+        formatter: (value) => (value > 0 ? `${(value / 1000).toFixed(2)} Tons` : `${value}`),
+        offsetX: -10,
+      },
+    },
     labels: {
       style: {
         colors: "#247BA0",
