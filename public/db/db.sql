@@ -503,41 +503,10 @@ ALTER SEQUENCE public.sales_items_id_seq OWNED BY public.sales_items.sales_item_
 -- Name: stocks_flow; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.stocks_flow (
-    id integer NOT NULL,
-    product_id integer,
-    update_type character varying NOT NULL,
-    quantity integer NOT NULL,
-    new_quantity integer,
-    update_key character varying
-);
 
-
-ALTER TABLE public.stocks_flow OWNER TO postgres;
 
 --
--- TOC entry 228 (class 1259 OID 24786)
--- Name: stocks_flow_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
 
-CREATE SEQUENCE public.stocks_flow_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.stocks_flow_id_seq OWNER TO postgres;
-
---
--- TOC entry 3442 (class 0 OID 0)
--- Dependencies: 228
--- Name: stocks_flow_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.stocks_flow_id_seq OWNED BY public.stocks_flow.id;
 
 
 --
@@ -627,13 +596,6 @@ ALTER TABLE ONLY public.returned_packagings ALTER COLUMN id SET DEFAULT nextval(
 
 ALTER TABLE ONLY public.sales_items ALTER COLUMN sales_item_id SET DEFAULT nextval('public.sales_items_id_seq'::regclass);
 
-
---
--- TOC entry 3229 (class 2604 OID 24796)
--- Name: stocks_flow id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.stocks_flow ALTER COLUMN id SET DEFAULT nextval('public.stocks_flow_id_seq'::regclass);
 
 
 --
@@ -1935,11 +1897,6 @@ INSERT INTO public.sales_items VALUES (440, 1, 60, 744);
 INSERT INTO public.sales_items VALUES (440, 6, 5, 745);
 INSERT INTO public.sales_items VALUES (441, 1, 4, 746);
 
-
---
--- TOC entry 3419 (class 0 OID 24781)
--- Dependencies: 227
--- Data for Name: stocks_flow; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 
@@ -2044,12 +2001,6 @@ SELECT pg_catalog.setval('public.sales_items_id_seq', 746, true);
 
 
 --
--- TOC entry 3454 (class 0 OID 0)
--- Dependencies: 228
--- Name: stocks_flow_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.stocks_flow_id_seq', 1, false);
 
 
 --
@@ -2150,14 +2101,6 @@ CREATE INDEX packagings_packaging_id_idx ON public.packagings USING btree (packa
 
 
 --
--- TOC entry 3251 (class 1259 OID 24816)
--- Name: stocks_flow_id_idx; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX stocks_flow_id_idx ON public.stocks_flow USING btree (id);
-
-
---
 -- TOC entry 3253 (class 2606 OID 24817)
 -- Name: delivered_packagings delivered_packagings_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
@@ -2229,13 +2172,6 @@ ALTER TABLE ONLY public.sales_items
     ADD CONSTRAINT sales_items_fk_1 FOREIGN KEY (product_id) REFERENCES public.products(product_id);
 
 
---
--- TOC entry 3260 (class 2606 OID 24852)
--- Name: stocks_flow stocks_flow_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.stocks_flow
-    ADD CONSTRAINT stocks_flow_fk FOREIGN KEY (product_id) REFERENCES public.products(product_id);
 
 
 -- Completed on 2023-09-04 16:24:00
