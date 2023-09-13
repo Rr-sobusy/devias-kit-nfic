@@ -1,3 +1,6 @@
 module.exports = {
-  reactStrictMode: true
+  reactStrictMode: true,
+  env : {
+    SERVER_ENDPOINT: process.env.SERVER_ENDPOINT
+  }
 };

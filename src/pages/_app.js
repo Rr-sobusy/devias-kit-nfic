@@ -1,3 +1,4 @@
+require('dotenv').config();
 import Head from "next/head";
 import { CacheProvider } from "@emotion/react";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -10,6 +11,8 @@ import { createTheme } from "src/theme";
 import { createEmotionCache } from "src/utils/create-emotion-cache";
 import "simplebar-react/dist/simplebar.min.css";
 import "./global.css";
+
+
 
 const clientSideEmotionCache = createEmotionCache();
 

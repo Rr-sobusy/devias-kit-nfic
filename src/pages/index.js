@@ -137,21 +137,21 @@ export default Page;
 export async function getServerSideProps() {
   try {
     // Fetch sales datas coming from API
-    const salesData = await fetch("http://192.168.1.100:3003/api/getbestsoldproducts").then((res) =>
+    const salesData = await fetch(`${process.env.SERVER_ENDPOINT}/api/getbestsoldproducts`).then((res) =>
       res.json()
     );
 
     // Fetch sales per month data from API
-    const salesPerMonth = await fetch("http://192.168.1.100:3003/api/getsalespermonth").then(
+    const salesPerMonth = await fetch(`${process.env.SERVER_ENDPOINT}/api/getsalespermonth`).then(
       (res) => res.json()
     );
 
     // Fetch customer stats and their volumes per month
-    const customerStats = await fetch("http://192.168.1.100:3003/api/getcustomerstats").then(
+    const customerStats = await fetch(`${process.env.SERVER_ENDPOINT}/api/getcustomerstats`).then(
       (res) => res.json()
     );
 
-    const salesThisWeek = await fetch("http://192.168.1.100:3003/api/getsalesthisweek").then(
+    const salesThisWeek = await fetch(`${process.env.SERVER_ENDPOINT}/api/getsalesthisweek`).then(
       (res) => res.json()
     );
     return {
