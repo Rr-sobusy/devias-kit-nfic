@@ -92,9 +92,8 @@ const Page = (props) => {
             <Grid xs={12} md={6} lg={4}>
               <BestMovedProduct
                 chartSeries={props.salesData
-                  ?.slice(0, 5)
                   .map(({ total_sold }) => Number(total_sold) / 1000)}
-                labels={props.salesData?.slice(0, 5).map(({ product_name }) => product_name)}
+                labels={props.salesData.map(({ product_name }) => product_name)}
                 sx={{ height: "100%", placeItems: "center" }}
               />
             </Grid>
@@ -137,7 +136,7 @@ export default Page;
 export async function getServerSideProps() {
   try {
     // Fetch sales datas coming from API
-    const salesData = await fetch(`${process.env.SERVER_ENDPOINT}/api/getbestsoldproducts`).then((res) =>
+    const salesData = await fetch(`http://192.168.1.100:3005/products/topsoldproduct`).then((res) =>
       res.json()
     );
 

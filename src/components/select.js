@@ -9,15 +9,15 @@ import {
 import PropTypes from 'prop-types'
 
 const SelectDropdown = (props) => {
-    const {placeholder, className, dropdownValues, onChange} = props
+    const {placeholder, className, dropdownValues, onChange , ...rest} = props
   return (
-    <Select onValueChange={onChange}>
+    <Select {...rest} onValueChange={onChange}>
       <SelectTrigger className={className}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="max-h-[400px]">
         {dropdownValues.map((props, key) => (
-          <SelectItem value={props.value} key={key}>
+          <SelectItem className="h-[2.75rem]" value={props.value} key={key}>
             {props.label}
           </SelectItem>
         ))}

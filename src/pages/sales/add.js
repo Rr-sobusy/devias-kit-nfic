@@ -1,7 +1,8 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import {
   Box,
   Container,
@@ -13,7 +14,6 @@ import {
   CardContent,
   Stack,
   Unstable_Grid2 as Grid,
-  CardActionArea,
 } from "@mui/material";
 import { Button as UIButton } from "src/ui-components/ui/button";
 import SelectDropdown from "src/components/select";
@@ -22,26 +22,82 @@ import { Input } from "src/ui-components/ui/input";
 import Back from "@heroicons/react/24/solid/ArrowDownLeftIcon";
 import Delete from "@heroicons/react/24/solid/TrashIcon";
 
-const initialStates = { id: 1, productName: "", quantity: 0 };
-const Page = () => {
+const initialStates = { id: 1, productId: "", quantity: 0 };
+const Page = (props) => {
+  // Instantiators
+  const router = useRouter();
+
+  // Local states
+  const [customerId, setCustomerId] = useState(0);
   const [orderItems, setOrderItems] = useState([initialStates]);
 
-  const changeHandler = (e)=>{
-        alert(e)
+  // Check the orderItems array if the is no values set to zero for validation
+  function isNoNulls(arr) {
+    let noNulls = true;
+    arr.map(({ productId, quantity }) => {
+      if (productId === 0 || quantity === 0) {
+        return (noNulls = false);
+      }
+    });
+    return noNulls;
   }
 
-  const quantityChangeHandler = (event,id)=>{
-     let arr = [...orderItems]
-    const toChange = arr.findIndex((item)=>item.id === id)
-    const newVale = arr[toChange]
-    newVale.quantity = event.target.value
-    arr[toChange] = newVale
-    console.log(arr)
-  }
+  // Add row handler -- Adding new row to filled up
+  const addNewRow = () => {
+    setOrderItems((prev) => [
+      ...prev,
+      { id: prev[prev.length - 1].id + 1, productId: 0, quantity: 0 },
+    ]);
+  };
 
-  useEffect(()=>{
-      console.log(orderItems)
-  }, [orderItems])
+  // Remove row that corresponds to id of clicked button
+  const deleteRow = (id) => {
+    const newRow = orderItems.filter((rows) => rows.id !== id);
+    if (orderItems.length > 1) {
+      setOrderItems(newRow);
+    }
+  };
+
+  // Event handler for changing the product column and mapped it to exact list
+  const productChangeHandler = (event, id) => {
+    let arr = [...orderItems];
+    const toChange = arr.findIndex((item) => item.id === id);
+    const objectToEdit = arr[toChange];
+    objectToEdit.productId = event;
+    arr[toChange] = objectToEdit;
+    setOrderItems(arr);
+  };
+
+  // Event handler for changing the quantity column and mapped it to exact list
+  const quantityChangeHandler = (event, id) => {
+    let arr = [...orderItems];
+    const toChange = arr.findIndex((item) => item.id === id);
+    const newVale = arr[toChange];
+    newVale.quantity = Number(event.target.value);
+    arr[toChange] = newVale;
+    setOrderItems(arr);
+  };
+
+  // Handle the submittion of Orders then navigate to sales route
+  const submitHandler = async () => {
+    if (isNoNulls(orderItems) === false || customerId === 0) {
+      alert("Validate missing fields!");
+    } else {
+      const newOrder = orderItems.map((values) => {
+        return {
+          product_id: values.productId,
+          quantity: values.quantity,
+        };
+      });
+      const response = await fetch("http://192.168.1.100:3005/sales", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        mode: "cors",
+        body: JSON.stringify({ customer_id: customerId, sales_items: newOrder }),
+      });
+      await router.push("/sales");
+    }
+  };
   return (
     <>
       <Head>
@@ -75,8 +131,14 @@ const Page = () => {
                   Customer Name
                 </Typography>
                 <SelectDropdown
+                  onChange={(e) => setCustomerId(e)}
                   placeholder="Select Customer"
-                  dropdownValues={[{ label: "noel africa", value: "noel africa" }]}
+                  dropdownValues={props.customerDatas.map(({ customer_id, customer_name }) => {
+                    return {
+                      label: customer_name,
+                      value: customer_id,
+                    };
+                  })}
                   className="h-[3.25rem] w-full md:w-1/4 lg:w-1/2"
                 />
               </Stack>
@@ -87,7 +149,7 @@ const Page = () => {
                   <Typography variant="subtitle2">Product Name</Typography>
                 </Grid>
                 <Grid lg={6} md={6} xs={6}>
-                  <Typography variant="subtitle2">Quantityi</Typography>
+                  <Typography variant="subtitle2">Quantity</Typography>
                 </Grid>
               </Grid>
               {orderItems.map((values, index) => (
@@ -96,23 +158,23 @@ const Page = () => {
                     {/* ***************Product Name ********************/}
                     <Grid lg={6} md={6} xs={6}>
                       <SelectDropdown
-                        onChange={() => changeHandler(index)}
+                        name="dropDown"
+                        onChange={(event) => productChangeHandler(event, values.id)}
                         className="h-[3.25rem]"
                         placeholder="Select Product"
-                        dropdownValues={[
-                          { label: "rex", value: "rex" },
-                          {
-                            label: "randy",
-                            value: "hernandez",
-                          },
-                        ]}
+                        dropdownValues={props.productDatas.map(({ product_id, product_name }) => {
+                          return {
+                            label: product_name,
+                            value: product_id,
+                          };
+                        })}
                       />
                     </Grid>
                     {/* *****************Item quantity ******************* */}
                     <Grid lg={5} md={5} xs={5}>
                       <Input
                         value={orderItems.quantity}
-                        onChange={(event)=>quantityChangeHandler(event,values.id)}
+                        onChange={(event) => quantityChangeHandler(event, values.id)}
                         type="number"
                         placeholder="Enter quantity"
                         className="w-full h-[3.25rem]"
@@ -120,12 +182,7 @@ const Page = () => {
                     </Grid>
                     <Grid lg={1} md={1} xs={1}>
                       <UIButton
-                        onClick={() => {
-                          const newRow = orderItems.filter((rows) => rows.id !== values.id);
-                          if (orderItems.length > 1) {
-                            setOrderItems(newRow);
-                          }
-                        }}
+                        onClick={() => deleteRow(values.id)}
                         className="h-[3.25rem]"
                         variant="outline"
                       >
@@ -139,18 +196,10 @@ const Page = () => {
               ))}
               <Box component="div">
                 <Stack justifyContent="flex-end" marginTop={4} gap={1} direction="row">
-                  <UIButton
-                    onClick={() =>
-                      setOrderItems((prev) => [
-                        ...prev,
-                        { id: prev[prev.length - 1].id + 1, productName: "", quantity: 0 },
-                      ])
-                    }
-                    variant="outline"
-                  >
+                  <UIButton onClick={addNewRow} variant="outline">
                     Add row
                   </UIButton>
-                  <UIButton>Create Sales</UIButton>
+                  <UIButton onClick={submitHandler}>Create Sales</UIButton>
                 </Stack>
               </Box>
             </CardContent>
@@ -160,6 +209,22 @@ const Page = () => {
     </>
   );
 };
+
+export async function getServerSideProps() {
+  // Fetch Product Datas
+  const productDatas = await fetch(`http://192.168.1.100:3005/products`).then((res) => res.json());
+
+  // Fetch Customer Datas
+  const customerDatas = await fetch(`http://192.168.1.100:3005/customers`).then((res) =>
+    res.json()
+  );
+  return {
+    props: {
+      productDatas,
+      customerDatas,
+    },
+  };
+}
 
 export default Page;
 
