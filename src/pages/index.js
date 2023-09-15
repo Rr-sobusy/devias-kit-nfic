@@ -15,37 +15,7 @@ const Page = (props) => {
   const sortedSalesThisWeek = props.salesThisWeek
     .map((values, index) => ({ ...values, index }))
     .sort((a, b) => b.index - a.index);
-  const salesPerMonth = props.salesPerMonth?.map(({ month, total_sales }) => {
-    return {
-      month:
-        month === "1"
-          ? "January"
-          : month === "2"
-          ? "February"
-          : month === "3"
-          ? "March"
-          : month === "4"
-          ? "April"
-          : month === "5"
-          ? "May"
-          : month === "6"
-          ? "June"
-          : month === "7"
-          ? "July"
-          : month === "8"
-          ? "August"
-          : month === "9"
-          ? "September"
-          : month === "10"
-          ? "October"
-          : month === "11"
-          ? "November"
-          : month === "12"
-          ? "December"
-          : null,
-      value: total_sales,
-    };
-  });
+
   return (
     <>
       <Head>
@@ -79,11 +49,12 @@ const Page = (props) => {
             </Grid>
             <Grid xs={12} lg={8}>
               <OverviewSales
-                categories={salesPerMonth.map(({ month }) => month)}
+                // categories={salesPerMonth.map(({ month }) => month)}
+                categories={props.salesPerMonth.map(({ month }) => month)}
                 chartSeries={[
                   {
                     name: "Sales this month",
-                    data: salesPerMonth.map(({ value }) => value),
+                    data: props.salesPerMonth.map(({ total_outbounded }) => total_outbounded),
                   },
                 ]}
                 sx={{ height: "100%" }}
@@ -91,8 +62,7 @@ const Page = (props) => {
             </Grid>
             <Grid xs={12} md={6} lg={4}>
               <BestMovedProduct
-                chartSeries={props.salesData
-                  .map(({ total_sold }) => Number(total_sold) / 1000)}
+                chartSeries={props.salesData.map(({ total_sold }) => Number(total_sold) / 1000)}
                 labels={props.salesData.map(({ product_name }) => product_name)}
                 sx={{ height: "100%", placeItems: "center" }}
               />
@@ -103,7 +73,7 @@ const Page = (props) => {
                 chartSeries={[
                   {
                     name: "Sales this day",
-                    data: sortedSalesThisWeek.map(({ sales_this_day }) => sales_this_day),
+                    data: sortedSalesThisWeek.map(({ sum }) => sum),
                   },
                 ]}
               />
@@ -141,7 +111,7 @@ export async function getServerSideProps() {
     );
 
     // Fetch sales per month data from API
-    const salesPerMonth = await fetch(`${process.env.SERVER_ENDPOINT}/api/getsalespermonth`).then(
+    const salesPerMonth = await fetch(`http://192.168.1.100:3005/sales/salesthisyear/2023`).then(
       (res) => res.json()
     );
 
@@ -150,8 +120,8 @@ export async function getServerSideProps() {
       (res) => res.json()
     );
 
-    const salesThisWeek = await fetch(`${process.env.SERVER_ENDPOINT}/api/getsalesthisweek`).then(
-      (res) => res.json()
+    const salesThisWeek = await fetch(`http://192.168.1.100:3005/sales/salesthisweek`).then((res) =>
+      res.json()
     );
     return {
       props: {

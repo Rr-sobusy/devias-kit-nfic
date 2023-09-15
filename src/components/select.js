@@ -15,9 +15,9 @@ const SelectDropdown = (props) => {
       <SelectTrigger className={className}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
-      <SelectContent className="max-h-[400px]">
+      <SelectContent className="max-h-[370px]">
         {dropdownValues.map((props, key) => (
-          <SelectItem className="h-[2.75rem]" value={props.value} key={key}>
+          <SelectItem className="h-[2.75rem] " value={props.value} key={key}>
             {props.label}
           </SelectItem>
         ))}
