@@ -54,7 +54,9 @@ const Page = (props) => {
                 chartSeries={[
                   {
                     name: "Sales this month",
-                    data: props.salesPerMonth.map(({ total_outbounded }) => total_outbounded),
+                    data: props.salesPerMonth.map(
+                      ({ total_outbounded }) => Number(total_outbounded) / 1000
+                    ),
                   },
                 ]}
                 sx={{ height: "100%" }}
@@ -116,7 +118,7 @@ export async function getServerSideProps() {
     );
 
     // Fetch customer stats and their volumes per month
-    const customerStats = await fetch(`${process.env.SERVER_ENDPOINT}/api/getcustomerstats`).then(
+    const customerStats = await fetch(`http://192.168.1.100:3005/customers/totalvolumebought`).then(
       (res) => res.json()
     );
 
