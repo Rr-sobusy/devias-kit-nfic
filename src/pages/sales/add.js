@@ -212,10 +212,10 @@ const Page = (props) => {
 
 export async function getServerSideProps() {
   // Fetch Product Datas
-  const productDatas = await fetch(`http://192.168.1.100:3005/products`).then((res) => res.json());
+  const productDatas = await fetch(`${process.env.SERVER_ENDPOINT}/products`).then((res) => res.json());
 
   // Fetch Customer Datas
-  const customerDatas = await fetch(`http://192.168.1.100:3005/customers`).then((res) =>
+  const customerDatas = await fetch(`${process.env.SERVER_ENDPOINT}/customers`).then((res) =>
     res.json()
   );
   return {

@@ -81,7 +81,9 @@ const Page = (props) => {
             <Grid xs={12} md={6} lg={3}>
               <TotalOutbounded
                 value={totalOutbounded}
-                beginningDate={props.salesDatas[props.salesDatas.length - 1].createdAt}
+                beginningDate={new Date(
+                  props.salesDatas[props.salesDatas.length - 1].createdAt
+                ).toLocaleDateString()}
               />
             </Grid>
           </Grid>
@@ -105,17 +107,15 @@ export default Page;
 export async function getServerSideProps() {
   try {
     // Fetch product datas coming from API
-    const productDatas = await fetch("http://192.168.1.100:3005/products").then((res) =>
+    const productDatas = await fetch(`${process.env.SERVER_ENDPOINT}/products`).then((res) =>
       res.json()
     );
     // Fetch production datas coming from API
-    const productionDatas = await fetch("http://192.168.1.100:3005/products/productiondatas").then(
+    const productionDatas = await fetch(`${process.env.SERVER_ENDPOINT}/products/productiondatas`).then(
       (res) => res.json()
     );
     // Fetch sales datas coming from API
-    const salesDatas = await fetch("http://192.168.1.100:3005/sales").then((res) =>
-      res.json()
-    );
+    const salesDatas = await fetch(`${process.env.SERVER_ENDPOINT}/sales`).then((res) => res.json());
     return {
       props: { productDatas, productionDatas, salesDatas },
     };
