@@ -153,7 +153,7 @@ const Page = (props) => {
                 </Grid>
               </Grid>
               {orderItems.map((values, index) => (
-                <Box>
+                <Box key={index}>
                   <Grid spacing={2} container>
                     {/* ***************Product Name ********************/}
                     <Grid lg={6} md={6} xs={6}>
@@ -212,7 +212,9 @@ const Page = (props) => {
 
 export async function getServerSideProps() {
   // Fetch Product Datas
-  const productDatas = await fetch(`${process.env.SERVER_ENDPOINT}/products`).then((res) => res.json());
+  const productDatas = await fetch(`${process.env.SERVER_ENDPOINT}/products`).then((res) =>
+    res.json()
+  );
 
   // Fetch Customer Datas
   const customerDatas = await fetch(`${process.env.SERVER_ENDPOINT}/customers`).then((res) =>

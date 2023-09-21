@@ -12,14 +12,15 @@ import {
 } from "@mui/material";
 import TopPerformer from "src/sections/sales/sales-top-performer";
 import Link from "next/link";
+import SalesTable from "src/sections/sales/sales-table";
+import SalesFilter from "src/sections/sales/sales-filter";
 
 /**** Hero icons****** */
 
-import CurrencyDollarIcon from "@heroicons/react/24/solid/CurrencyDollarIcon";
 import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
-import { LucideUnlink } from "lucide-react";
 
-const Page = () => {
+const Page = (props) => {
+  const { salesDatas } = props;
   return (
     <>
       <Head>
@@ -51,11 +52,22 @@ const Page = () => {
               <TopPerformer />
             </Grid>
           </Grid>
+          <SalesFilter />
+          <SalesTable salesDatas={salesDatas} />
         </Container>
       </Box>
     </>
   );
 };
+
+export async function getServerSideProps() {
+  const salesDatas = await fetch(`${process.env.SERVER_ENDPOINT}/sales`).then((res) => res.json());
+  return {
+    props: {
+      salesDatas,
+    },
+  };
+}
 
 Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 

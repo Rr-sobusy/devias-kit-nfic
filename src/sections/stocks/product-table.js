@@ -12,10 +12,10 @@ import {
 } from "@mui/material";
 import React from "react";
 import { Scrollbar } from "src/components/scrollbar";
-import { Button as UIButton } from "src/ui-components/ui/button";
+import PropTypes from "prop-types";
+import { memo } from "react";
 
 /**********************Hero Icons*********** */
-import Delete from "@heroicons/react/24/outline/BackspaceIcon";
 import More from "@heroicons/react/24/outline/EllipsisHorizontalIcon";
 const ProductTable = (props) => {
   const { productDatas = [] } = props;
@@ -31,7 +31,7 @@ const ProductTable = (props) => {
                 <TableCell>Packaging Size</TableCell>
                 <TableCell>Current Stocks</TableCell>
                 <TableCell>Stocks in kls</TableCell>
-                <TableCell>Action</TableCell>
+                <TableCell>{""}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -48,11 +48,8 @@ const ProductTable = (props) => {
                   </TableCell>
                   <TableCell>
                     <Stack direction="row" alignItems="center" spacing={1}>
-                      <SvgIcon>
+                      <SvgIcon className="cursor-pointer">
                         <More />
-                      </SvgIcon>
-                      <SvgIcon>
-                        <Delete />
                       </SvgIcon>
                     </Stack>
                   </TableCell>
@@ -66,4 +63,8 @@ const ProductTable = (props) => {
   );
 };
 
-export default ProductTable;
+export default memo(ProductTable);
+
+ProductTable.propTypes = {
+  productDatas: PropTypes.array,
+};

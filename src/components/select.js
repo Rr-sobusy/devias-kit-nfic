@@ -6,10 +6,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "src/ui-components/ui/select";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 
 const SelectDropdown = (props) => {
-    const {placeholder, className, dropdownValues, onChange , ...rest} = props
+  const { placeholder, className, dropdownValues, onChange, ...rest } = props;
   return (
     <Select {...rest} onValueChange={onChange}>
       <SelectTrigger className={className}>
@@ -29,12 +29,12 @@ const SelectDropdown = (props) => {
 export default SelectDropdown;
 
 SelectDropdown.propTypes = {
-    placeholder: PropTypes.string,
-    className:PropTypes.string,
-    dropdownValues:PropTypes.array,
-    onChange:PropTypes.func
-}
+  placeholder: PropTypes.string,
+  className: PropTypes.string,
+  dropdownValues: PropTypes.array,
+  onChange: PropTypes.func,
+};
 
 SelectDropdown.defaultProps = {
-    placeholder: ''
-}
+  placeholder: "",
+};
