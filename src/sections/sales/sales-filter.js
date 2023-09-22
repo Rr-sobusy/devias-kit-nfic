@@ -4,7 +4,6 @@ import { Button } from "src/ui-components/ui/button";
 import { Calendar } from "src/ui-components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "src/ui-components/ui/popover";
 import { cn } from "@/lib/utils";
-import { format } from "date-fns";
 
 const SalesFilter = () => {
   const [date, setDate] = React.useState(new Date());
@@ -27,7 +26,7 @@ const SalesFilter = () => {
               mode="single"
               selected={date}
               onSelect={(selectedDate) => {
-                        setDate(selectedDate)
+                setDate(selectedDate);
               }}
               initialFocus
             />

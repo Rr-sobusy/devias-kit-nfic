@@ -14,6 +14,7 @@ import TopPerformer from "src/sections/sales/sales-top-performer";
 import Link from "next/link";
 import SalesTable from "src/sections/sales/sales-table";
 import SalesFilter from "src/sections/sales/sales-filter";
+import TopCustThisMonth from "src/sections/sales/top-performing-thismonth";
 
 /**** Hero icons****** */
 
@@ -33,7 +34,6 @@ const Page = (props) => {
               <Typography variant="h4">Sales Stats</Typography>
             </Stack>
             <Link href="sales/add">
-              {" "}
               <Button
                 onClick={() => console.log(process.env.SERVER_ENDPOINT)}
                 startIcon={
@@ -48,12 +48,16 @@ const Page = (props) => {
             </Link>
           </Stack>
           <Grid mt={3} spacing={3} container>
-            <Grid xs={12} md={6} lg={6}>
+            <Grid xs={12} md={6} lg={8}>
               <TopPerformer />
             </Grid>
+            <Grid xs={12} md={12} lg={4}>
+              <TopCustThisMonth />
+            </Grid>
           </Grid>
-          <SalesFilter />
-          <SalesTable salesDatas={salesDatas} />
+         <Grid marginTop={4}>
+         <SalesTable salesDatas={salesDatas} />
+         </Grid>
         </Container>
       </Box>
     </>
