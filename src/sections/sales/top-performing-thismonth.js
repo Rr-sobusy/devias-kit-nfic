@@ -10,7 +10,7 @@ const TopCustThisMonth = () => {
         <Stack spacing={3}>
           <Stack spacing={2} alignItems="center" direction="row">
             <Avatar
-              sx={{ height: 52, width: 52, borderRadius: 1, bgcolor: "#FF6978" }}
+              sx={{ height: 52, width: 52, borderRadius: 1, bgcolor: "#FF9B50" }}
               variant="square"
             >
               1
@@ -25,7 +25,7 @@ const TopCustThisMonth = () => {
           </Stack>
           <Stack spacing={2} alignItems="center" direction="row">
             <Avatar
-              sx={{ height: 52, width: 52, borderRadius: 1, bgcolor: "#669BBC" }}
+              sx={{ height: 52, width: 52, borderRadius: 1, bgcolor: "#FF9B50" }}
               variant="square"
             >
               2
@@ -40,7 +40,7 @@ const TopCustThisMonth = () => {
           </Stack>
           <Stack alignItems="center" direction="row">
             <Avatar
-              sx={{ height: 52, width: 52, borderRadius: 1, bgcolor: "#A98467" }}
+              sx={{ height: 52, width: 52, borderRadius: 1, bgcolor: "#FF9B50" }}
               variant="square"
             >
               3

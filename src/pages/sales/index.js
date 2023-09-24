@@ -48,7 +48,7 @@ const Page = (props) => {
             </Link>
           </Stack>
           <Grid mt={3} spacing={3} container>
-            <Grid xs={12} md={6} lg={8}>
+            <Grid xs={12} md={12} lg={8}>
               <TopPerformer />
             </Grid>
             <Grid xs={12} md={12} lg={4}>
