@@ -43,15 +43,15 @@ const SalesTable = (props) => {
                   <TableCell>{values.customer_name}</TableCell>
                   <TableCell>{new Date(values.createdAt).toLocaleDateString()}</TableCell>
                   <TableCell>
-                    {values.sales_items?.map((salesItems) => (
-                      <Stack>
+                    {values.sales_items?.map((salesItems, index) => (
+                      <Stack key={index}>
                         <p>{salesItems.product_name}</p>
                       </Stack>
                     ))}
                   </TableCell>
                   <TableCell>
-                    {values.sales_items?.map((salesItems) => (
-                      <Stack>
+                    {values.sales_items?.map((salesItems, index) => (
+                      <Stack key={index}>
                         <p>{salesItems.quantity}</p>
                       </Stack>
                     ))}

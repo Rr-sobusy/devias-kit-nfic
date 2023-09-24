@@ -89,7 +89,7 @@ const Page = (props) => {
           quantity: values.quantity,
         };
       });
-      const response = await fetch("http://192.168.1.100:3005/sales", {
+      const response = await fetch(`${process.env.SERVER_ENDPOINT}/sales`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         mode: "cors",
