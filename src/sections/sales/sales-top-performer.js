@@ -53,6 +53,7 @@ const TopPerformer = (props) => {
             data: [11, 32, 45, 32, 34, 52, 41]
           }]}
           options={chartOptions}
+          width="100%"
         />
       </CardContent>
       <Divider />

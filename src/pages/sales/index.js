@@ -21,7 +21,7 @@ import TopCustThisMonth from "src/sections/sales/top-performing-thismonth";
 import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
 
 const Page = (props) => {
-  const { salesDatas } = props;
+  const { salesDatas, topCustThisMonth } = props;
   return (
     <>
       <Head>
@@ -52,7 +52,7 @@ const Page = (props) => {
               <TopPerformer />
             </Grid>
             <Grid xs={12} md={12} lg={4}>
-              <TopCustThisMonth />
+              <TopCustThisMonth topCustomers={topCustThisMonth} />
             </Grid>
           </Grid>
          <Grid marginTop={4}>
@@ -66,9 +66,12 @@ const Page = (props) => {
 
 export async function getServerSideProps() {
   const salesDatas = await fetch(`${process.env.SERVER_ENDPOINT}/sales`).then((res) => res.json());
+
+  const topCustThisMonth = await fetch(`${process.env.SERVER_ENDPOINT}/customers/bestforentiremonth/2023`).then(res=>res.json())
   return {
     props: {
       salesDatas,
+      topCustThisMonth
     },
   };
 }
