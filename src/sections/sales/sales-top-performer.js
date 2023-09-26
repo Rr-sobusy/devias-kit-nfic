@@ -18,20 +18,17 @@ const TopPerformer = (props) => {
       curve: "smooth",
     },
     xaxis: {
-      type: "datetime",
+      type: "string",
       categories: [
-        "2018-09-19T00:00:00.000Z",
-        "2018-09-19T01:30:00.000Z",
-        "2018-09-19T02:30:00.000Z",
-        "2018-09-19T03:30:00.000Z",
-        "2018-09-19T04:30:00.000Z",
-        "2018-09-19T05:30:00.000Z",
-        "2018-09-19T06:30:00.000Z",
+        "April",
+        "April",
+        "April",
+        "April",
       ],
     },
     tooltip: {
       x: {
-        format: "dd/MM/yy HH:mm",
+        format: "string",
       },
     },
   };
@@ -45,13 +42,20 @@ const TopPerformer = (props) => {
         <Chart
           height={302}
           type="area"
-          series={[{
-            name: 'series1',
-            data: [31, 40, 28, 51, 42, 109, 100]
-          }, {
-            name: 'series2',
-            data: [11, 32, 45, 32, 34, 52, 41]
-          }]}
+          series={[
+            {
+              name: "series1",
+              data: [31, 40, 28, 51],
+            },
+            {
+              name: "series2",
+              data: [11, 32, 45, 32],
+            },
+            {
+              name: "series2",
+              data: [130, 45, 70, 120],
+            },
+          ]}
           options={chartOptions}
           width="100%"
         />

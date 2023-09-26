@@ -68,7 +68,7 @@ const SalesTable = (props) => {
   );
 };
 
-export default memo(SalesTable);
+export default SalesTable;
 
 SalesTable.propTypes = {
   salesDatas: PropTypes.array,

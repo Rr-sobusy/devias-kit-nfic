@@ -16,15 +16,17 @@ import SalesTable from "src/sections/sales/sales-table";
 import { useQuery } from "@tanstack/react-query";
 import TopCustThisMonth from "src/sections/sales/top-performing-thismonth";
 
+
 /**** Hero icons****** */
 
 import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
 
 const Page = (props) => {
+  const [text,setText] = useState('')
   const { topCustThisMonth } = props;
   const { data } = useQuery({
     queryKey: ["salesDatas"],
-    queryFn: async() => {
+    queryFn: () => {
      return fetch(`${process.env.SERVER_ENDPOINT}/sales`).then((res) => res.json());
     },
   });
@@ -39,6 +41,7 @@ const Page = (props) => {
           <Stack direction="row" justifyContent="space-between">
             <Stack>
               <Typography variant="h4">Sales Stats</Typography>
+              <input type="text" onChange={(e)=>setText(e.target.value)} />
             </Stack>
             <Link href="sales/add">
               <Button
