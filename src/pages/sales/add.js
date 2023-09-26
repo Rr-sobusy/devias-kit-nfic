@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import Head from "next/head";
 import Link from "next/link";
@@ -15,6 +15,7 @@ import {
   Stack,
   Unstable_Grid2 as Grid,
 } from "@mui/material";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { Button as UIButton } from "src/ui-components/ui/button";
 import SelectDropdown from "src/components/select";
 import { Input } from "src/ui-components/ui/input";
@@ -23,6 +24,7 @@ import Back from "@heroicons/react/24/solid/ArrowDownLeftIcon";
 import Delete from "@heroicons/react/24/solid/TrashIcon";
 
 const initialStates = { id: 1, productId: "", quantity: 0 };
+
 const Page = (props) => {
   // Instantiators
   const router = useRouter();
@@ -30,6 +32,8 @@ const Page = (props) => {
   // Local states
   const [customerId, setCustomerId] = useState(0);
   const [orderItems, setOrderItems] = useState([initialStates]);
+
+  const queryClient = useQueryClient();
 
   // Check the orderItems array if the is no values set to zero for validation
   function isNoNulls(arr) {
@@ -83,21 +87,30 @@ const Page = (props) => {
     if (isNoNulls(orderItems) === false || customerId === 0) {
       alert("Validate missing fields!");
     } else {
+      mutation.mutate();
+      router.push("/sales");
+    }
+  };
+  const mutation = useMutation({
+    mutationFn: async () => {
       const newOrder = orderItems.map((values) => {
         return {
           product_id: values.productId,
           quantity: values.quantity,
         };
       });
-      const response = await fetch(`${process.env.SERVER_ENDPOINT}/sales`, {
+      const result = await fetch(`${process.env.SERVER_ENDPOINT}/sales`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         mode: "cors",
         body: JSON.stringify({ customer_id: customerId, sales_items: newOrder }),
       });
-      await router.push("/sales");
-    }
-  };
+      return result;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["salesData"] });
+    },
+  });
   return (
     <>
       <Head>

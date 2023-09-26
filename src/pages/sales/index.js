@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Head from "next/head";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import {
@@ -13,7 +13,7 @@ import {
 import TopPerformer from "src/sections/sales/sales-top-performer";
 import Link from "next/link";
 import SalesTable from "src/sections/sales/sales-table";
-import SalesFilter from "src/sections/sales/sales-filter";
+import { useQuery } from "@tanstack/react-query";
 import TopCustThisMonth from "src/sections/sales/top-performing-thismonth";
 
 /**** Hero icons****** */
@@ -21,7 +21,14 @@ import TopCustThisMonth from "src/sections/sales/top-performing-thismonth";
 import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
 
 const Page = (props) => {
-  const { salesDatas, topCustThisMonth } = props;
+  const { topCustThisMonth } = props;
+  const { data } = useQuery({
+    queryKey: ["salesDatas"],
+    queryFn: async() => {
+     return fetch(`${process.env.SERVER_ENDPOINT}/sales`).then((res) => res.json());
+    },
+  });
+
   return (
     <>
       <Head>
@@ -55,9 +62,9 @@ const Page = (props) => {
               <TopCustThisMonth topCustomers={topCustThisMonth} />
             </Grid>
           </Grid>
-         <Grid marginTop={4}>
-         <SalesTable salesDatas={salesDatas} />
-         </Grid>
+          <Grid marginTop={4}>
+            <SalesTable salesDatas={data} />
+          </Grid>
         </Container>
       </Box>
     </>
@@ -65,12 +72,9 @@ const Page = (props) => {
 };
 
 export async function getServerSideProps() {
-  const salesDatas = await fetch(`${process.env.SERVER_ENDPOINT}/sales`).then((res) => res.json());
-
   const topCustThisMonth = await fetch(`${process.env.SERVER_ENDPOINT}/customers/bestforentiremonth/2023`).then(res=>res.json())
   return {
     props: {
-      salesDatas,
       topCustThisMonth
     },
   };

@@ -7,12 +7,9 @@ import {
   Card,
   TableBody,
   Stack,
-  Typography,
   SvgIcon,
-  CardHeader,
-  Divider,
 } from "@mui/material";
-import React from "react";
+import React,{memo} from "react";
 import { Scrollbar } from "src/components/scrollbar";
 import PropTypes from "prop-types";
 
@@ -71,7 +68,7 @@ const SalesTable = (props) => {
   );
 };
 
-export default SalesTable;
+export default memo(SalesTable);
 
 SalesTable.propTypes = {
   salesDatas: PropTypes.array,

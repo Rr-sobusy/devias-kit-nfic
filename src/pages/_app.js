@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 import Head from "next/head";
 import { CacheProvider } from "@emotion/react";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -9,11 +9,11 @@ import { AuthConsumer, AuthProvider } from "src/contexts/auth-context";
 import { useNProgress } from "src/hooks/use-nprogress";
 import { createTheme } from "src/theme";
 import { createEmotionCache } from "src/utils/create-emotion-cache";
+import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
 import "simplebar-react/dist/simplebar.min.css";
 import "./global.css";
 
-
-
+const queryClient = new QueryClient();
 const clientSideEmotionCache = createEmotionCache();
 
 const SplashScreen = () => null;
@@ -35,16 +35,18 @@ const App = (props) => {
       </Head>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <AuthProvider>
-          <StyledEngineProvider injectFirst>
-            <ThemeProvider theme={theme}>
-              <CssBaseline />
-              <AuthConsumer>
-                {(auth) =>
-                  auth.isLoading ? <SplashScreen /> : getLayout(<Component {...pageProps} />)
-                }
-              </AuthConsumer>
-            </ThemeProvider>
-          </StyledEngineProvider>
+          <QueryClientProvider client={queryClient}>
+            <StyledEngineProvider injectFirst>
+              <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <AuthConsumer>
+                  {(auth) =>
+                    auth.isLoading ? <SplashScreen /> : getLayout(<Component {...pageProps} />)
+                  }
+                </AuthConsumer>
+              </ThemeProvider>
+            </StyledEngineProvider>
+          </QueryClientProvider>
         </AuthProvider>
       </LocalizationProvider>
     </CacheProvider>
