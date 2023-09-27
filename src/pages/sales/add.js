@@ -107,8 +107,8 @@ const Page = (props) => {
       });
       return result;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["salesData"] });
+    onSettled: async() => {
+     await queryClient.invalidateQueries({ queryKey: ["sales"] });
     },
   });
   return (

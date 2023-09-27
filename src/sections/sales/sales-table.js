@@ -9,12 +9,11 @@ import {
   Stack,
   SvgIcon,
 } from "@mui/material";
-import React,{memo} from "react";
+import React from "react";
 import { Scrollbar } from "src/components/scrollbar";
 import PropTypes from "prop-types";
 
 /**********************Hero Icons*********** */
-import Delete from "@heroicons/react/24/outline/BackspaceIcon";
 import More from "@heroicons/react/24/outline/EllipsisHorizontalIcon";
 const SalesTable = (props) => {
   const { salesDatas = [{ sales_id: 1 }] } = props;
@@ -38,7 +37,7 @@ const SalesTable = (props) => {
                 <TableRow key={index}>
                   <TableCell>{values.sales_id}</TableCell>
                   <TableCell>{values.customer_name}</TableCell>
-                  <TableCell>{new Date(values.createdAt).toLocaleDateString()}</TableCell>
+                  <TableCell>{values && new Date(values.createdAt).toLocaleDateString()}</TableCell>
                   <TableCell>
                     {values.sales_items?.map((salesItems, index) => (
                       <Stack key={index}>

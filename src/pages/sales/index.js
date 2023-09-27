@@ -9,6 +9,7 @@ import {
   Stack,
   Button,
   SvgIcon,
+  Skeleton
 } from "@mui/material";
 import TopPerformer from "src/sections/sales/sales-top-performer";
 import Link from "next/link";
@@ -24,11 +25,14 @@ import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
 const Page = (props) => {
   const [text,setText] = useState('')
   const { topCustThisMonth } = props;
-  const { data } = useQuery({
-    queryKey: ["salesDatas"],
-    queryFn: () => {
+  const { data , isFetching} = useQuery({
+    queryKey: ['sales'],
+    queryFn:  async () => {
+      alert("fetchedd!")
      return fetch(`${process.env.SERVER_ENDPOINT}/sales`).then((res) => res.json());
     },
+    refetchOnMount: false,
+    refetchOnWindowFocus: false
   });
 
   return (
@@ -41,7 +45,7 @@ const Page = (props) => {
           <Stack direction="row" justifyContent="space-between">
             <Stack>
               <Typography variant="h4">Sales Stats</Typography>
-              <input type="text" onChange={(e)=>setText(e.target.value)} />
+              <input type="text" onChange={(e) => setText(e.target.value)} />
             </Stack>
             <Link href="sales/add">
               <Button
@@ -66,7 +70,16 @@ const Page = (props) => {
             </Grid>
           </Grid>
           <Grid marginTop={4}>
-            <SalesTable salesDatas={data} />
+            {isFetching ? (
+              <Stack justifyContent="center" spacing={1}>
+                {/* For other variants, adjust the size with `width` and `height` */}
+                <Skeleton variant="circular" width={40} height={40} />
+                <Skeleton variant="rectangular" width={210} height={60} />
+                <Skeleton variant="rounded" width={210} height={60} />
+              </Stack>
+            ) : (
+              <SalesTable salesDatas={data} />
+            )}
           </Grid>
         </Container>
       </Box>
