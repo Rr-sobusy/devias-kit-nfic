@@ -88,7 +88,6 @@ const Page = (props) => {
       alert("Validate missing fields!");
     } else {
       mutation.mutate();
-      router.push("/sales");
     }
   };
   const mutation = useMutation({
@@ -108,7 +107,8 @@ const Page = (props) => {
       return result;
     },
     onSettled: async() => {
-     await queryClient.invalidateQueries({ queryKey: ["sales"] });
+      router.push("/sales");
+      queryClient.invalidateQueries({queryKey: ['sales']})
     },
   });
   return (

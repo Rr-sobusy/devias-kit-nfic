@@ -28,10 +28,8 @@ const Page = (props) => {
   const { data , isFetching} = useQuery({
     queryKey: ['sales'],
     queryFn:  async () => {
-      alert("fetchedd!")
      return fetch(`${process.env.SERVER_ENDPOINT}/sales`).then((res) => res.json());
     },
-    refetchOnMount: false,
     refetchOnWindowFocus: false
   });
 
@@ -59,6 +57,7 @@ const Page = (props) => {
               >
                 Add Sales
               </Button>
+            
             </Link>
           </Stack>
           <Grid mt={3} spacing={3} container>
