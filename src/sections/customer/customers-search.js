@@ -1,23 +1,27 @@
 import MagnifyingGlassIcon from '@heroicons/react/24/solid/MagnifyingGlassIcon';
 import { Card, InputAdornment, OutlinedInput, SvgIcon } from '@mui/material';
+import PropTypes from 'prop-types'
 
-export const CustomersSearch = () => (
-  <Card sx={{ p: 2 }}>
-    <OutlinedInput
-      defaultValue=""
-      fullWidth
-      placeholder="Search customer"
-      startAdornment={(
-        <InputAdornment position="start">
-          <SvgIcon
-            color="action"
-            fontSize="small"
-          >
-            <MagnifyingGlassIcon />
-          </SvgIcon>
-        </InputAdornment>
-      )}
-      sx={{ maxWidth: 500 }}
-    />
-  </Card>
-);
+export const CustomersSearch = () => {
+  return (
+    <Card sx={{ p: 2 }}>
+      <OutlinedInput
+        defaultValue=""
+        fullWidth
+        placeholder="Search customer"
+        startAdornment={
+          <InputAdornment position="start">
+            <SvgIcon color="action" fontSize="small">
+              <MagnifyingGlassIcon />
+            </SvgIcon>
+          </InputAdornment>
+        }
+        sx={{ maxWidth: 500 }}
+      />
+    </Card>
+  );
+};
+
+CustomersSearch.propTypes = {
+      changeHandler: PropTypes.func.isRequired
+}

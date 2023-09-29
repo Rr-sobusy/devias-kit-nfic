@@ -8,15 +8,32 @@ import {
   TableBody,
   Stack,
   SvgIcon,
+  TablePagination,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { Scrollbar } from "src/components/scrollbar";
 import PropTypes from "prop-types";
 
 /**********************Hero Icons*********** */
 import More from "@heroicons/react/24/outline/EllipsisHorizontalIcon";
 const SalesTable = (props) => {
-  const { salesDatas = [{ sales_id: 1 }] } = props;
+  const { salesDatas = [] } = props;
+
+  // Table pagination
+
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [page, setPage] = useState(0);
+
+  // Slicing salesData array depends to page and number of rows per page
+  const displayedDatas = salesDatas.slice(page * rowsPerPage, (page * rowsPerPage )+ rowsPerPage);
+
+  const onPageChange = (_, value) => {
+    setPage(value);
+  };
+
+  const onRowsPerPageChange = (event) => {
+    setRowsPerPage(event.target.value);
+  };
   return (
     <Card>
       <Scrollbar>
@@ -33,7 +50,7 @@ const SalesTable = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {salesDatas.map((values, index) => (
+              {displayedDatas.map((values, index) => (
                 <TableRow key={index}>
                   <TableCell>{values.sales_id}</TableCell>
                   <TableCell>{values.customer_name}</TableCell>
@@ -61,6 +78,14 @@ const SalesTable = (props) => {
               ))}
             </TableBody>
           </Table>
+          <TablePagination
+            page={page}
+            onPageChange={onPageChange}
+            count={salesDatas.length}
+            onRowsPerPageChange={onRowsPerPageChange}
+            rowsPerPage={rowsPerPage}
+            rowsPerPageOptions={[10, 15, 20]}
+          />
         </Box>
       </Scrollbar>
     </Card>

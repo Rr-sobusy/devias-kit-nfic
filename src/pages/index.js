@@ -7,6 +7,7 @@ import { OverviewSales } from "src/sections/overview/overview-sales";
 import { OverviewTasksProgress } from "src/sections/overview/overview-tasks-progress";
 import { OverviewTotalCustomers } from "src/sections/overview/overview-total-customers";
 import { OverviewTotalProfit } from "src/sections/overview/overview-total-profit";
+import { OverviewTotalProducts } from "src/sections/overview/overview-total-products";
 import { BestMovedProduct } from "src/sections/overview/overview-best-moved-product";
 
 const now = new Date();
@@ -39,7 +40,7 @@ const Page = (props) => {
               />
             </Grid>
             <Grid xs={12} sm={6} lg={3}>
-              <OverviewTotalCustomers difference={16} positive={false} sx={{ height: "100%" }} />
+             <OverviewTotalProducts />
             </Grid>
             <Grid xs={12} sm={6} lg={3}>
               <OverviewTasksProgress sx={{ height: "100%" }} value={75.5} />

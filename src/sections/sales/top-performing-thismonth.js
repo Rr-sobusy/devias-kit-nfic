@@ -20,7 +20,7 @@ const TopCustThisMonth = ({ topCustomers = [] }) => {
                 <Typography variant="h6">{customer_name}</Typography>
                 <Typography color="text.secondary" variant="subtitle2">
                   w/ total of{" "}
-                  <span style={{ color: "#3A86FF" }}>{Number(total_bought) / 1000} tons</span> of
+                  <span style={{ color: "#3A86FF" }}>{(Number(total_bought) / 1000).toFixed(2)} tons</span> of
                   purchases this month
                 </Typography>
               </Stack>
