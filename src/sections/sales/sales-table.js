@@ -13,6 +13,15 @@ import {
 import React, { useState } from "react";
 import { Scrollbar } from "src/components/scrollbar";
 import PropTypes from "prop-types";
+import { Popover, PopoverContent, PopoverTrigger } from "src/ui-components/ui/popover";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "src/ui-components/ui/dialog";
 
 /**********************Hero Icons*********** */
 import More from "@heroicons/react/24/outline/EllipsisHorizontalIcon";
@@ -25,7 +34,7 @@ const SalesTable = (props) => {
   const [page, setPage] = useState(0);
 
   // Slicing salesData array depends to page and number of rows per page
-  const displayedDatas = salesDatas.slice(page * rowsPerPage, (page * rowsPerPage )+ rowsPerPage);
+  const displayedDatas = salesDatas.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
   const onPageChange = (_, value) => {
     setPage(value);
@@ -70,9 +79,33 @@ const SalesTable = (props) => {
                     ))}
                   </TableCell>
                   <TableCell>
-                    <SvgIcon className="cursor-pointer">
-                      <More />
-                    </SvgIcon>
+                    <Popover>
+                      <PopoverTrigger>
+                        <SvgIcon>
+                          <More />
+                        </SvgIcon>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[7rem] px-2">
+                      <p className="leading-7 px-2 cursor-pointer  hover:bg-slate-100">Edit</p>
+                        <Dialog>
+                          <DialogTrigger className="w-full text-start">
+                            <p className="leading-7 px-2 cursor-pointer  hover:bg-slate-100">
+                              Delete
+                            </p>
+                          </DialogTrigger>
+                          <DialogContent>
+                            <DialogHeader>
+                              <DialogTitle>Are you sure absolutely sure?</DialogTitle>
+                              <DialogDescription>
+                                This action cannot be undone. This will permanently delete your
+                                account and remove your data from our servers.
+                              </DialogDescription>
+                            </DialogHeader>
+                          </DialogContent>
+                        </Dialog>
+                    
+                      </PopoverContent>
+                    </Popover>
                   </TableCell>
                 </TableRow>
               ))}

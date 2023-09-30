@@ -11,7 +11,7 @@ const SalesThisWeek = (props) => {
       toolbar: false,
     },
     markers: {
-      size: 5,
+      size: 4,
       color: "black",
     },
     xaxis: {
