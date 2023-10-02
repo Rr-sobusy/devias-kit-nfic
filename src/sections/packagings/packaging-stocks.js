@@ -1,4 +1,4 @@
-import { Box, Button, Card, Stack, Table, TableCell, TableHead, TableRow } from "@mui/material";
+import { Box, Button, Card, Stack, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import React from "react";
 import { Scrollbar } from "src/components/scrollbar";
 
@@ -22,6 +22,9 @@ export const PackagingStocks = () => {
                         <TableCell>{""}</TableCell>
                     </TableRow>
                 </TableHead>
+                <TableBody>
+                    
+                </TableBody>
             </Table>
         </Box>
     </Scrollbar>
