@@ -23,7 +23,6 @@ import TopCustThisMonth from "src/sections/sales/top-performing-thismonth";
 import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
 
 const Page = (props) => {
-  const [text,setText] = useState('')
   const { topCustThisMonth } = props;
   const { data , isFetching} = useQuery({
     queryKey: ['sales'],
@@ -43,7 +42,6 @@ const Page = (props) => {
           <Stack direction="row" justifyContent="space-between">
             <Stack>
               <Typography variant="h4">Sales Stats</Typography>
-              <input type="text" onChange={(e) => setText(e.target.value)} />
             </Stack>
             <Link href="sales/add">
               <Button

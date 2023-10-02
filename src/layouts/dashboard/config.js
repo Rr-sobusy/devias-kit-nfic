@@ -55,6 +55,15 @@ export const items = [
     )
   },
   {
+    title: 'Packaging Section',
+    path: '/packagings',
+    icon: (
+      <SvgIcon fontSize="small">
+        <ShoppingBagIcon />
+      </SvgIcon>
+    )
+  },
+  {
     title: 'Companies',
     path: '/companies',
     icon: (
