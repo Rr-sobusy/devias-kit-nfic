@@ -7,7 +7,6 @@ import { PackagingStocks } from "src/sections/packagings/packaging-stocks";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -38,6 +37,65 @@ function a11yProps(index) {
   };
 }
 
+const packagingDatas = [
+  {
+      "packaging_id": "13",
+      "packaging_name": "DWA LINER SACKS",
+      "initial_stocks": 151,
+      "total_delivered": 0,
+      "total_released": 0,
+      "total_returned": 0
+  },
+  {
+      "packaging_id": "9",
+      "packaging_name": "DWP LINER SACKS",
+      "initial_stocks": 5963,
+      "total_delivered": 0,
+      "total_released": 0,
+      "total_returned": 0
+  },
+  {
+      "packaging_id": "14",
+      "packaging_name": "PIGLET BOOSTER",
+      "initial_stocks": 3114,
+      "total_delivered": 0,
+      "total_released": 0,
+      "total_returned": 0
+  },
+  {
+      "packaging_id": "12",
+      "packaging_name": "PLASTIC 18.5  x 28",
+      "initial_stocks": 10812,
+      "total_delivered": 0,
+      "total_released": 869,
+      "total_returned": 0
+  },
+  {
+      "packaging_id": "8",
+      "packaging_name": "PLASTIC 22 x 33",
+      "initial_stocks": 7916,
+      "total_delivered": 0,
+      "total_released": 0,
+      "total_returned": 0
+  },
+  {
+      "packaging_id": "10",
+      "packaging_name": "PLASTIC 24 x 36 (FLEXI)",
+      "initial_stocks": 3239,
+      "total_delivered": 0,
+      "total_released": 2039,
+      "total_returned": 0
+  },
+  {
+      "packaging_id": "11",
+      "packaging_name": "PLASTIC 24 x 36 (LABO)",
+      "initial_stocks": 1179,
+      "total_delivered": 0,
+      "total_released": 0,
+      "total_returned": 0
+  }
+]
+
 const Page = () => {
   const [value, setValue] = React.useState(0);
 
@@ -64,7 +122,7 @@ const Page = () => {
               </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-              <PackagingStocks />
+              <PackagingStocks packagingDatas={packagingDatas} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
               Item Two

@@ -86,24 +86,24 @@ const SalesTable = (props) => {
                         </SvgIcon>
                       </PopoverTrigger>
                       <PopoverContent className="w-[7rem] px-2">
-                      <p className="leading-7 px-2 cursor-pointer  hover:bg-slate-100">Edit</p>
+                        <p className="leading-7 px-2 cursor-pointer  hover:bg-slate-100">Edit</p>
                         <Dialog>
                           <DialogTrigger className="w-full text-start">
                             <p className="leading-7 px-2 cursor-pointer  hover:bg-slate-100">
                               Delete
                             </p>
                           </DialogTrigger>
-                          <DialogContent>
+                          <DialogContent  className="xl:min-w-[1000px]">
                             <DialogHeader>
-                              <DialogTitle>Are you sure absolutely sure?</DialogTitle>
+                              <DialogTitle>Are you sure absolutely sure to delete transaction?</DialogTitle>
                               <DialogDescription>
-                                This action cannot be undone. This will permanently delete your
-                                account and remove your data from our servers.
+                               {
+                                values.createdAt
+                               }
                               </DialogDescription>
                             </DialogHeader>
                           </DialogContent>
                         </Dialog>
-                    
                       </PopoverContent>
                     </Popover>
                   </TableCell>
