@@ -119,6 +119,7 @@ const Page = () => {
                 <Tab label="Deliveries" {...a11yProps(1)} />
                 <Tab label="Released" {...a11yProps(2)} />
                 <Tab label="Returned" {...a11yProps(3)} />
+                <Tab label="Adjustments" {...a11yProps(4)} />
               </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
@@ -132,6 +133,9 @@ const Page = () => {
             </CustomTabPanel>
             <CustomTabPanel value={value} index={3}>
               Item four
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={4}>
+              Item five
             </CustomTabPanel>
             <Divider />
           </Box>
