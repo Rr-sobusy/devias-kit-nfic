@@ -2,8 +2,10 @@ import { Box, Button, Container, Stack, Typography, Tabs, Tab, Divider } from "@
 import Head from "next/head";
 import React from "react";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
+import { useQuery } from "@tanstack/react-query";
 import PropTypes from "prop-types";
 import { PackagingStocks } from "src/sections/packagings/packaging-stocks";
+import { DeliveryTable } from "src/sections/packagings/delivery-table";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -37,71 +39,43 @@ function a11yProps(index) {
   };
 }
 
-const packagingDatas = [
-  {
-      "packaging_id": "13",
-      "packaging_name": "DWA LINER SACKS",
-      "initial_stocks": 151,
-      "total_delivered": 0,
-      "total_released": 0,
-      "total_returned": 0
-  },
-  {
-      "packaging_id": "9",
-      "packaging_name": "DWP LINER SACKS",
-      "initial_stocks": 5963,
-      "total_delivered": 0,
-      "total_released": 0,
-      "total_returned": 0
-  },
-  {
-      "packaging_id": "14",
-      "packaging_name": "PIGLET BOOSTER",
-      "initial_stocks": 3114,
-      "total_delivered": 0,
-      "total_released": 0,
-      "total_returned": 0
-  },
-  {
-      "packaging_id": "12",
-      "packaging_name": "PLASTIC 18.5  x 28",
-      "initial_stocks": 10812,
-      "total_delivered": 0,
-      "total_released": 869,
-      "total_returned": 0
-  },
-  {
-      "packaging_id": "8",
-      "packaging_name": "PLASTIC 22 x 33",
-      "initial_stocks": 7916,
-      "total_delivered": 0,
-      "total_released": 0,
-      "total_returned": 0
-  },
-  {
-      "packaging_id": "10",
-      "packaging_name": "PLASTIC 24 x 36 (FLEXI)",
-      "initial_stocks": 3239,
-      "total_delivered": 0,
-      "total_released": 2039,
-      "total_returned": 0
-  },
-  {
-      "packaging_id": "11",
-      "packaging_name": "PLASTIC 24 x 36 (LABO)",
-      "initial_stocks": 1179,
-      "total_delivered": 0,
-      "total_released": 0,
-      "total_returned": 0
-  }
-]
-
 const Page = () => {
+  /**
+   * * Fetch the datas coming from API - Current Stocks of packaging
+   */
+  const { data: packagingDatas } = useQuery({
+    queryKey: ["packagings"],
+    queryFn: async () => {
+      const queryResult = await fetch(`${process.env.SERVER_ENDPOINT}/packaging`).then((res) =>
+        res.json()
+      );
+      return queryResult;
+    },
+  });
+
+  /**
+   * * Fetch the datas coming from API - Delivery datas of packagings
+   */
+  const { data: deliveryDatas } = useQuery({
+    queryKey: ["delivery"],
+    queryFn: async () => {
+      const queryResult = await fetch(`${process.env.SERVER_ENDPOINT}/packaging/delivered`).then(
+        (res) => res.json()
+      );
+      return queryResult;
+    },
+  });
+
+  /**
+   * * Local states associated of handling the controls of mui tab
+   */
+
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (_, newValue) => {
     setValue(newValue);
   };
+
   return (
     <>
       <Head>
@@ -126,7 +100,7 @@ const Page = () => {
               <PackagingStocks packagingDatas={packagingDatas} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-              Item Two
+              <DeliveryTable deliveryDatas={deliveryDatas} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
               Item Three

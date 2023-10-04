@@ -16,9 +16,18 @@ import ProductionTable from "src/sections/productions/production-table";
 import { useQuery } from "@tanstack/react-query";
 import PropTypes from "prop-types";
 
+/**
+ * ? Dialog Component imported modules
+ */
+import AddProduction from "src/sections/productions/add-production-dialog";
+
+
+/**
+ *  * From Line 21 - 54 -- Functions to be used for controlling the mui tab behavior
+ */
+
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -55,6 +64,10 @@ const Page = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  /**
+   * 
+   */
   const { data: productionDatas } = useQuery({
     queryKey: ["productionDatas"],
     queryFn: async () => {
@@ -64,6 +77,7 @@ const Page = () => {
       return queryResult;
     },
   });
+
   return (
     <>
       <Head>
@@ -83,7 +97,9 @@ const Page = () => {
                 <Typography variant="h4">Production Stats</Typography>
                 <Stack gap={1} direction="row">
                   <Button variant="outlined">Mock used packaging</Button>
-                  <Button variant="contained">Add proudctions</Button>
+                  <AddProduction>
+                    <Button variant="contained">Inbound Product</Button>
+                  </AddProduction>
                 </Stack>
               </Stack>
               <Grid marginTop={5} container>
