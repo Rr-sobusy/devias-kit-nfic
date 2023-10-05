@@ -4,7 +4,7 @@ import UsersIcon from '@heroicons/react/24/solid/UsersIcon';
 import { Avatar, Card, CardContent, Stack, SvgIcon, Typography, Box } from '@mui/material';
 
 export const OverviewTotalProducts = (props) => {
-  const { difference, positive = false, sx, value } = props;
+  const { value, noStocks } = props;
 
   return (
     <Card sx={{ height: "100%" }}>
@@ -14,7 +14,7 @@ export const OverviewTotalProducts = (props) => {
             <Typography color="text.secondary" variant="overline">
               Total Products
             </Typography>
-            <Typography variant="h4">15</Typography>
+            <Typography variant="h4">{value}</Typography>
           </Stack>
           <Avatar
             sx={{
@@ -30,7 +30,7 @@ export const OverviewTotalProducts = (props) => {
         </Stack>
         <Box marginTop={3} component="div">
           <Typography sx={{ display: "flex", gap: 0.5 }} variant="subtitle2" color="text.secondary">
-            2 item/s without stocks
+            {noStocks} item/s without stocks
           </Typography>
         </Box>
       </CardContent>

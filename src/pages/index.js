@@ -40,7 +40,12 @@ const Page = (props) => {
               />
             </Grid>
             <Grid xs={12} sm={6} lg={3}>
-             <OverviewTotalProducts />
+              <OverviewTotalProducts
+                noStocks={
+                  props.productDatas.filter(({ current_stocks }) => current_stocks === "0").length
+                }
+                value={props.productDatas.length}
+              />
             </Grid>
             <Grid xs={12} sm={6} lg={3}>
               <OverviewTasksProgress sx={{ height: "100%" }} value={75.5} />
@@ -106,25 +111,34 @@ Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default Page;
 
+/**
+ * * Fetch though server side
+ */
+
 export async function getServerSideProps() {
   try {
-    // Fetch sales datas coming from API
-    const salesData = await fetch(`${process.env.SERVER_ENDPOINT}/products/topsoldproduct`).then((res) =>
+    // Fetch Product datas
+    const productDatas = await fetch(`${process.env.SERVER_ENDPOINT}/products`).then((res) =>
       res.json()
+    );
+
+    // Fetch sales datas coming from API
+    const salesData = await fetch(`${process.env.SERVER_ENDPOINT}/products/topsoldproduct`).then(
+      (res) => res.json()
     );
 
     // Fetch sales per month data from API
-    const salesPerMonth = await fetch(`${process.env.SERVER_ENDPOINT}/sales/salesthisyear/2023`).then(
-      (res) => res.json()
-    );
+    const salesPerMonth = await fetch(
+      `${process.env.SERVER_ENDPOINT}/sales/salesthisyear/2023`
+    ).then((res) => res.json());
 
     // Fetch customer stats and their volumes per month
-    const customerStats = await fetch(`${process.env.SERVER_ENDPOINT}/customers/totalvolumebought`).then(
-      (res) => res.json()
-    );
+    const customerStats = await fetch(
+      `${process.env.SERVER_ENDPOINT}/customers/totalvolumebought`
+    ).then((res) => res.json());
 
-    const salesThisWeek = await fetch(`${process.env.SERVER_ENDPOINT}/sales/salesthisweek`).then((res) =>
-      res.json()
+    const salesThisWeek = await fetch(`${process.env.SERVER_ENDPOINT}/sales/salesthisweek`).then(
+      (res) => res.json()
     );
     return {
       props: {
@@ -132,6 +146,7 @@ export async function getServerSideProps() {
         salesPerMonth,
         customerStats,
         salesThisWeek,
+        productDatas,
       },
     };
   } catch (err) {

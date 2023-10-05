@@ -59,7 +59,7 @@ const AddProduction = ({ children }) => {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
           product_id: states.productId,
-          production_date: date,
+          production_date: new Date(date).toLocaleDateString(),
           output_quantity: states.quantity,
           damaged_packaging: states.damagedPackaging,
         }),
@@ -126,7 +126,7 @@ const AddProduction = ({ children }) => {
             </Grid>
             <div className="mt-6 h-[2rem] flex justify-end ">
               <Dcustom.Close>
-                <Button onClick={() => console.log(states)} className="bg-black hover:bg-slate-700">
+                <Button onClick={() => mutation.mutate()} className="bg-indigo-500 hover:bg-indigo-600">
                   Proceed
                 </Button>
               </Dcustom.Close>
