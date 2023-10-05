@@ -24,12 +24,17 @@ import {
   DialogTrigger,
 } from "src/ui-components/ui/dialog";
 import * as DialogPrimitives from '@radix-ui/react-dialog'
+import { useMutation } from "@tanstack/react-query";
 
 /**********************Hero Icons*********** */
 import More from "@heroicons/react/24/outline/EllipsisHorizontalIcon";
 import { Button } from "src/ui-components/ui/button";
 const SalesTable = (props) => {
   const { salesDatas = [] } = props;
+
+  /**
+   * 
+   */
 
   // Table pagination
 
@@ -50,8 +55,10 @@ const SalesTable = (props) => {
   /**
    * * On-Submit handler in deleting a sales instance from the database
    */
-  const submitHandler =(salesId)=>{
-        alert(salesId)
+  const submitHandler =async(salesId)=>{
+        const serverResponse = await fetch(`${process.env.SERVER_ENDPOINT}/sales/deletesales/${salesId}`,{
+            method : 'DL'
+        })
   }
   return (
     <Card>
