@@ -23,6 +23,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "src/ui-components/ui/dialog";
+import * as DialogPrimitives from '@radix-ui/react-dialog'
 
 /**********************Hero Icons*********** */
 import More from "@heroicons/react/24/outline/EllipsisHorizontalIcon";
@@ -45,6 +46,13 @@ const SalesTable = (props) => {
   const onRowsPerPageChange = (event) => {
     setRowsPerPage(event.target.value);
   };
+
+  /**
+   * * On-Submit handler in deleting a sales instance from the database
+   */
+  const submitHandler =(salesId)=>{
+        alert(salesId)
+  }
   return (
     <Card>
       <Scrollbar>
@@ -139,11 +147,16 @@ const SalesTable = (props) => {
                                       </TableBody>
                                     </Table>
                                   </Stack>
-                                  <Stack spacing={1} justifyContent="flex-end" direction="row" marginTop={2}>
-                                    <Button variant="outline">Back</Button>
-                                    <Button className="bg-red-500 hover:bg-red-600">
-                                      Delete
-                                    </Button>
+                                  <Stack
+                                    spacing={1}
+                                    justifyContent="flex-end"
+                                    direction="row"
+                                    marginTop={2}
+                                  >
+                                    <DialogPrimitives.Close>
+                                      <Button variant="outline">Back</Button>
+                                    </DialogPrimitives.Close>
+                                    <Button onClick={()=>submitHandler(values.sales_id)} className="bg-red-500 hover:bg-red-600">Delete</Button>
                                   </Stack>
                                 </div>
                               </DialogDescription>
