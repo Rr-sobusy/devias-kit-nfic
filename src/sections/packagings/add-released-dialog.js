@@ -17,13 +17,14 @@ import SelectDropdown from "src/components/select";
 import { Popover, PopoverContent, PopoverTrigger } from "src/ui-components/ui/popover";
 import { Calendar } from "src/ui-components/ui/calendar";
 import { Box, Unstable_Grid2 as Grid, Stack } from "@mui/material";
+import * as DialogPrimitives from '@radix-ui/react-dialog'
 
-const AddReleased = ({ children, packagingDatas }) => {
+const AddReleased = ({ children, packagingDatas , handlePost}) => {
   /**
    * * lOCAL STATE
    */
   const [states, setStates] = useState({
-    productId: 0,
+    packagingId: 0,
     quantity: 0,
     releasedFor: "",
   });
@@ -66,7 +67,7 @@ const AddReleased = ({ children, packagingDatas }) => {
               </Grid>
               <Grid xs={12} md={6} lg={5}>
                 <SelectDropdown
-                  onChange={(value) => setStates((prev) => ({ ...prev, productId: value }))}
+                  onChange={(value) => setStates((prev) => ({ ...prev, packagingId: value }))}
                   dropdownValues={dropDownValues}
                 />
               </Grid>
@@ -90,7 +91,9 @@ const AddReleased = ({ children, packagingDatas }) => {
               </Grid>
             </Grid>
             <Stack direction="row" justifyContent="end" marginTop={2} component="div">
-              <Button onClick={() => console.log(states, date)}>Add</Button>
+              <DialogPrimitives.Close>
+                <Button onClick={() => handlePost(date, states)}>Add</Button>
+              </DialogPrimitives.Close>
             </Stack>
           </Box>
         </DialogDescription>
