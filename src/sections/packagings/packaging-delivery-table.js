@@ -1,6 +1,7 @@
 import { Box, Button, Card, Stack, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import React from "react";
 import { Scrollbar } from "src/components/scrollbar";
+import AddDelivered from "./add-delivery-dialog";
 
 export const DeliveryTable = (props) => {
     const {deliveryDatas = []} = props
@@ -9,7 +10,9 @@ export const DeliveryTable = (props) => {
       <Scrollbar sx={{ minWidth: "350px" }}>
         <Box>
           <Stack marginY={3} justifyContent="flex-end" direction="row">
-            <Button variant="contained">Add New</Button>
+            <AddDelivered>
+              <Button variant="contained">Add Delivered</Button>
+            </AddDelivered>
           </Stack>
           <Table>
             <TableHead>
@@ -22,14 +25,14 @@ export const DeliveryTable = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-            {
-                deliveryDatas.map((values)=>(<TableRow>
+              {deliveryDatas.map((values) => (
+                <TableRow>
                   <TableCell>{values.packaging_id}</TableCell>
                   <TableCell>{values.packaging.packaging_name}</TableCell>
                   <TableCell>{new Date(values.date_delivered).toDateString()}</TableCell>
                   <TableCell>{values.delivered_quantity}</TableCell>
-                </TableRow>))
-            }
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </Box>

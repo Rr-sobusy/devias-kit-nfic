@@ -5,7 +5,9 @@ import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { useQuery } from "@tanstack/react-query";
 import PropTypes from "prop-types";
 import { PackagingStocks } from "src/sections/packagings/packaging-stocks";
-import { DeliveryTable } from "src/sections/packagings/delivery-table";
+import { DeliveryTable } from "src/sections/packagings/packaging-delivery-table";
+import PackagingReleased from "src/sections/packagings/packaging-released-table";
+import PackagingReturned from "src/sections/packagings/packaging-returned-table";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -100,13 +102,13 @@ const Page = () => {
               <PackagingStocks packagingDatas={packagingDatas} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-              <DeliveryTable deliveryDatas={deliveryDatas} />
+              <DeliveryTable  deliveryDatas={deliveryDatas} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
-              Item Three
+              <PackagingReleased packagingDatas={packagingDatas} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={3}>
-              Item four
+              <PackagingReturned />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={4}>
               Item five

@@ -23,8 +23,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "src/ui-components/ui/dialog";
-import * as DialogPrimitives from '@radix-ui/react-dialog'
+import * as DialogPrimitives from "@radix-ui/react-dialog";
 import { useMutation } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
 /**********************Hero Icons*********** */
 import More from "@heroicons/react/24/outline/EllipsisHorizontalIcon";
@@ -32,9 +33,27 @@ import { Button } from "src/ui-components/ui/button";
 const SalesTable = (props) => {
   const { salesDatas = [] } = props;
 
-  /**
-   * 
+  const queryClient = useQueryClient();
+
+  /*
+   * Mutation function for deleting sales instance
    */
+  const mutation = useMutation({
+    mutationFn: async (salesId) => {
+      const serverResponse = await fetch(
+        `${process.env.SERVER_ENDPOINT}/sales/deletesales/${salesId}`,
+        {
+          method: "DELETE",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ sales_id: salesId }),
+        }
+      );
+      return serverResponse;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["sales"] });
+    },
+  });
 
   // Table pagination
 
@@ -55,11 +74,9 @@ const SalesTable = (props) => {
   /**
    * * On-Submit handler in deleting a sales instance from the database
    */
-  const submitHandler =async(salesId)=>{
-        const serverResponse = await fetch(`${process.env.SERVER_ENDPOINT}/sales/deletesales/${salesId}`,{
-            method : 'DL'
-        })
-  }
+  const submitHandler = async (salesId) => {
+    mutation.mutate(salesId);
+  };
   return (
     <Card>
       <Scrollbar>
@@ -163,7 +180,14 @@ const SalesTable = (props) => {
                                     <DialogPrimitives.Close>
                                       <Button variant="outline">Back</Button>
                                     </DialogPrimitives.Close>
-                                    <Button onClick={()=>submitHandler(values.sales_id)} className="bg-red-500 hover:bg-red-600">Delete</Button>
+                                    <DialogPrimitives.Close>
+                                      <Button
+                                        onClick={() => submitHandler(values.sales_id)}
+                                        className="bg-red-500 hover:bg-red-600"
+                                      >
+                                        Delete
+                                      </Button>
+                                    </DialogPrimitives.Close>
                                   </Stack>
                                 </div>
                               </DialogDescription>
