@@ -56,19 +56,6 @@ const Page = () => {
   });
 
   /**
-   * * Fetch the datas coming from API - Delivery datas of packagings
-   */
-  const { data: deliveryDatas } = useQuery({
-    queryKey: ["delivery"],
-    queryFn: async () => {
-      const queryResult = await fetch(`${process.env.SERVER_ENDPOINT}/packaging/delivered`).then(
-        (res) => res.json()
-      );
-      return queryResult;
-    },
-  });
-
-  /**
    * * Local states associated of handling the controls of mui tab
    */
 
@@ -102,7 +89,7 @@ const Page = () => {
               <PackagingStocks packagingDatas={packagingDatas} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-              <DeliveryTable  deliveryDatas={deliveryDatas} />
+              <DeliveryTable packagingDatas={packagingDatas} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
               <PackagingReleased packagingDatas={packagingDatas} />

@@ -17,19 +17,18 @@ import PropTypes from "prop-types";
 import format from "date-fns/format";
 
 const PackagingReleased = ({ packagingDatas }) => {
-
-/**
- * * Fetch packaging delivery datas in this component level to prevent unnecessary rerender of other sibling component
- */
-const { data: releasedPackagingDatas = [] } = useQuery({
-  queryKey: ["releasedPackaging"],
-  queryFn: async () => {
-    const queryResult = await fetch(`${process.env.SERVER_ENDPOINT}/packaging/released`).then(
-      (res) => res.json()
-    );
-    return queryResult;
-  },
-});
+  /**
+   * * Fetch packaging delivery datas in this component level to prevent unnecessary rerender of other sibling component
+   */
+  const { data: releasedPackagingDatas = [] } = useQuery({
+    queryKey: ["releasedPackaging"],
+    queryFn: async () => {
+      const queryResult = await fetch(`${process.env.SERVER_ENDPOINT}/packaging/released`).then(
+        (res) => res.json()
+      );
+      return queryResult;
+    },
+  });
 
   /**
    * TODO: Make mutation for released packagings
@@ -45,7 +44,7 @@ const { data: releasedPackagingDatas = [] } = useQuery({
       return response;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey : ["releasedPackaging"]})
+      queryClient.invalidateQueries({ queryKey: ["releasedPackaging"] });
     },
   });
   const handlePost = (date, states) => {
@@ -72,7 +71,7 @@ const { data: releasedPackagingDatas = [] } = useQuery({
                 <TableCell>Packaging Name</TableCell>
                 <TableCell>Date Released</TableCell>
                 <TableCell>Quantity Released</TableCell>
-                <TableCell>Released For</TableCell>
+                <TableCell>Remarks</TableCell>
                 <TableCell>{""}</TableCell>
               </TableRow>
             </TableHead>
@@ -81,7 +80,7 @@ const { data: releasedPackagingDatas = [] } = useQuery({
                 <TableRow key={values.id}>
                   <TableCell>{values.packaging_id}</TableCell>
                   <TableCell>{values.packaging.packaging_name}</TableCell>
-                  <TableCell>{values.date_released}</TableCell>
+                  <TableCell>{new Date(values.date_released).toDateString()}</TableCell>
                   <TableCell>{values.quantity_released}</TableCell>
                   <TableCell>{values.released_for}</TableCell>
                 </TableRow>
