@@ -95,7 +95,7 @@ const Page = () => {
               <PackagingReleased packagingDatas={packagingDatas} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={3}>
-              <PackagingReturned />
+              <PackagingReturned packagingDatas={packagingDatas} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={4}>
               Item five

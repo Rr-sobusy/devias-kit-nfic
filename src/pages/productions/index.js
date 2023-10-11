@@ -15,6 +15,7 @@ import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import ProductionTable from "src/sections/productions/production-table";
 import { useQuery } from "@tanstack/react-query";
 import PropTypes from "prop-types";
+import Link from "next/link";
 
 /**
  * ? Dialog Component imported modules
@@ -96,7 +97,9 @@ const Page = () => {
               <Stack direction="row" justifyContent="space-between">
                 <Typography variant="h4">Production Stats</Typography>
                 <Stack gap={1} direction="row">
-                  <Button variant="outlined">Mock used packaging</Button>
+                  <Link href="/productions/comparer">
+                    <Button variant="outlined">Compare used packaging</Button>
+                  </Link>
                   <AddProduction>
                     <Button variant="contained">Inbound Product</Button>
                   </AddProduction>
