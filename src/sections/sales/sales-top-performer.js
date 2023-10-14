@@ -1,16 +1,34 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Avatar, Card, CardContent, Divider, Typography } from "@mui/material";
+import { useTheme } from "@mui/material";
 import { Chart } from "src/components/chart";
 
 const TopPerformer = (props) => {
   const { value, sx, title, bgColor } = props;
+  const theme = useTheme();
 
   const chartOptions = {
     chart: {
       height: 350,
-      type: "area",
+      stacked: false,
+      background:"transparent"
     },
+    grid: {
+      borderColor: theme.palette.divider,
+      strokeDashArray: 2,
+      xaxis: {
+        lines: {
+          show: false,
+        },
+      },
+      yaxis: {
+        lines: {
+          show: true,
+        },
+      },
+    },
+    colors: [theme.palette.primary.main],
     dataLabels: {
       enabled: false,
     },
@@ -19,16 +37,21 @@ const TopPerformer = (props) => {
     },
     xaxis: {
       type: "string",
-      categories: [
-        "April",
-        "April",
-        "April",
-        "April",
-      ],
+    },
+    yaxis: {
+      labels: {
+        formatter: (value) => (value > 0 ? `${(value / 1000).toFixed(2)} Tons` : `${value}`),
+        offsetX: -10,
+      },
     },
     tooltip: {
       x: {
         format: "string",
+      },
+    },
+    labels: {
+      style: {
+        colors: "#247BA0",
       },
     },
   };
@@ -37,23 +60,15 @@ const TopPerformer = (props) => {
     <Card sx={sx}>
       <CardContent>
         <Typography color="text.secondary" variant="overline">
-          Last 7-day best moved
+          Trend Products for entire month
         </Typography>
         <Chart
           height={302}
-          type="area"
+          type="bar"
           series={[
             {
-              name: "series1",
-              data: [31, 40, 28, 51],
-            },
-            {
-              name: "series2",
-              data: [11, 32, 45, 32],
-            },
-            {
-              name: "series2",
-              data: [130, 45, 70, 120],
+              name: "Outbounded this month",
+              data: [31, 40, 28, 51, 60],
             },
           ]}
           options={chartOptions}

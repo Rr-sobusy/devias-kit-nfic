@@ -9,7 +9,7 @@ import { AuthConsumer, AuthProvider } from "src/contexts/auth-context";
 import { useNProgress } from "src/hooks/use-nprogress";
 import { createTheme } from "src/theme";
 import { createEmotionCache } from "src/utils/create-emotion-cache";
-import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "simplebar-react/dist/simplebar.min.css";
 import "./global.css";
 
