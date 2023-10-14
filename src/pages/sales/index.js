@@ -41,7 +41,7 @@ const Page = (props) => {
         <Container maxWidth="xl" component="main">
           <Stack direction="row" justifyContent="space-between">
             <Stack>
-              <Typography variant="h4">Sales Stats</Typography>
+              <Typography variant="h4">Sales Statistics</Typography>
             </Stack>
             <Link href="sales/add">
               <Button
@@ -60,7 +60,7 @@ const Page = (props) => {
           </Stack>
           <Grid mt={3} spacing={3} container>
             <Grid xs={12} md={12} lg={8}>
-              <TopPerformer />
+              <TopPerformer salesDatas={props.topSoldThisMonth} />
             </Grid>
             <Grid xs={12} md={12} lg={4}>
               <TopCustThisMonth topCustomers={topCustThisMonth} />
@@ -86,9 +86,13 @@ const Page = (props) => {
 
 export async function getServerSideProps() {
   const topCustThisMonth = await fetch(`${process.env.SERVER_ENDPOINT}/customers/bestforentiremonth/2023`).then(res=>res.json())
+ 
+  //* Fetch from API the datas for five best product for the entire month
+  const topSoldThisMonth = await fetch(`${process.env.SERVER_ENDPOINT}/sales/bestproductthismonth`).then(res=>res.json())
   return {
     props: {
-      topCustThisMonth
+      topCustThisMonth,
+      topSoldThisMonth
     },
   };
 }

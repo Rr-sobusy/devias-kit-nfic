@@ -5,14 +5,14 @@ import { useTheme } from "@mui/material";
 import { Chart } from "src/components/chart";
 
 const TopPerformer = (props) => {
-  const { value, sx, title, bgColor } = props;
+  const { value, sx, title, bgColor, salesDatas = [] } = props;
   const theme = useTheme();
 
   const chartOptions = {
     chart: {
       height: 350,
       stacked: false,
-      background:"transparent"
+      background: "transparent",
     },
     grid: {
       borderColor: theme.palette.divider,
@@ -28,7 +28,7 @@ const TopPerformer = (props) => {
         },
       },
     },
-    colors: [theme.palette.primary.main],
+    colors: ["#06D6A0"],
     dataLabels: {
       enabled: false,
     },
@@ -37,17 +37,23 @@ const TopPerformer = (props) => {
     },
     xaxis: {
       type: "string",
+      categories: salesDatas.map(({ product_name }) => product_name),
     },
     yaxis: {
       labels: {
-        formatter: (value) => (value > 0 ? `${(value / 1000).toFixed(2)} Tons` : `${value}`),
+        formatter: (value) => (value > 0 ? `${value} Tons` : `${value}`),
         offsetX: -10,
+        style: {
+          colors: theme.palette.text.secondary,
+        },
       },
     },
     tooltip: {
-      x: {
-        format: "string",
-      },
+    y: {
+    formatter: function(value, { series, seriesIndex, dataPointIndex, w }) {
+      return value
+    }
+  }
     },
     labels: {
       style: {
@@ -68,8 +74,8 @@ const TopPerformer = (props) => {
           series={[
             {
               name: "Outbounded this month",
-              data: [31, 40, 28, 51, 60],
-            },
+              data: salesDatas.map(({summed})=>Number(summed) / 1000),
+            }
           ]}
           options={chartOptions}
           width="100%"
@@ -84,6 +90,7 @@ TopPerformer.propTypes = {
   value: PropTypes.string,
   title: PropTypes.string,
   bgColor: PropTypes.string,
+  salesDatas: PropTypes.array
 };
 
 export default TopPerformer;
