@@ -71,7 +71,7 @@ export const SideNav = (props) => {
                 color="inherit"
                 variant="subtitle1"
               >
-                App Test
+             NFIC Warehouse MS
               </Typography>
             </div>
             <SvgIcon
