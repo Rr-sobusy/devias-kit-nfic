@@ -85,7 +85,7 @@ const Page = (props) => {
 };
 
 export async function getServerSideProps() {
-  const topCustThisMonth = await fetch(`${process.env.SERVER_ENDPOINT}/customers/bestforentiremonth/2023`).then(res=>res.json())
+  const topCustThisMonth = await fetch(`${process.env.SERVER_ENDPOINT}/customers/bestforentiremonth/2024`).then(res=>res.json())
  
   //* Fetch from API the datas for five best product for the entire month
   const topSoldThisMonth = await fetch(`${process.env.SERVER_ENDPOINT}/sales/bestproductthismonth`).then(res=>res.json())

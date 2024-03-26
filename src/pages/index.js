@@ -129,7 +129,7 @@ export async function getServerSideProps() {
 
     // Fetch sales per month data from API
     const salesPerMonth = await fetch(
-      `${process.env.SERVER_ENDPOINT}/sales/salesthisyear/2023`
+      `${process.env.SERVER_ENDPOINT}/sales/salesthisyear/2024`
     ).then((res) => res.json());
 
     // Fetch customer stats and their volumes per month
